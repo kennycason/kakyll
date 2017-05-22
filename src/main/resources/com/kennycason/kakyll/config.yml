@@ -1,0 +1,18 @@
+# Welcome to Kakyll!
+
+# This config is a sample configuration and is used to configure your blog.
+# This is the config that will be used when generating a new site.
+
+
+title: My Blog Title
+email: you@email.com
+description: My Blog is about random stuff like lorem ipsum and programming. I hope you enjoy.
+base_url: http://localhost:8080 # The base url to your blog. e.g. http://hakyll.com
+template_engine: handlebars
+pages:
+    - index.html
+    - about.html
+directories:
+    - assets
+
+
