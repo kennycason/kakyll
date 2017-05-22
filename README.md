@@ -30,24 +30,21 @@ kakyll deploy (TODO)
 ```bash
 .
 ├── templates
-|   ├── footer.html
-|   └── header.html
-|   ├── default.html
-|   └── post.html
+|   ├── footer.hbs
+|   └── header.hbs
 ├── posts
 |   ├── 2017-05-17-birth-of-kakyll.md
-|   └── 2017-05-18-kotlin-love.md
+|   └── 2017-05-18-kotlin-is-awesome.md
 ├──-assets
-|   └── sass
-|   |   └── style.scss
 |   ├── css
-|   |   └── style.css
+|   |   ├── style.css
+|   |   └── style.scss
 |   ├── js
 |   |   └── scripts.js
 |   ├── images
 |   |   └── my_logo.png
-├── index.html
-├── about.html
+├── index.hbs
+├── about.hbs
 └── config.yml
 ```
 

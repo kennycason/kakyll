@@ -1,6 +1,6 @@
 package com.kennycason.kakyll.cmd
 
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
 import org.apache.commons.io.FileUtils
@@ -22,7 +22,7 @@ import java.nio.file.Paths
 class Serve : Cmd {
 
     override fun run(args: Array<String>) {
-        val sitePath = Paths.get(Constants.Directories.SITE)
+        val sitePath = Paths.get(Structures.Directories.SITE)
         if (!Files.exists(sitePath)) {
             println("Building site")
             Build().run(args)
@@ -39,7 +39,7 @@ class Serve : Cmd {
 
         val resourceHandler = ResourceHandler()
         resourceHandler.isDirectoriesListed = true
-        resourceHandler.resourceBase = Constants.Directories.SITE + "/"
+        resourceHandler.resourceBase = Structures.Directories.SITE + "/"
         resourceHandler.cacheControl = "no-cache"
 
         val handlerList = HandlerList()

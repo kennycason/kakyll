@@ -1,6 +1,6 @@
 package com.kennycason.kakyll.cmd
 
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
 import org.apache.commons.io.FileUtils
 import java.io.File
@@ -13,7 +13,7 @@ import java.nio.file.Paths
 class Clean : Cmd {
 
     override fun run(args: Array<String>) {
-        val sitePath = Paths.get(Constants.Directories.SITE)
+        val sitePath = Paths.get(Structures.Directories.SITE)
         if (Files.exists(sitePath)) {
             println("Cleaning site")
             sitePath.toFile().deleteRecursively()

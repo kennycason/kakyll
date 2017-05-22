@@ -1,7 +1,7 @@
 package com.kennycason.kakyll.view.render
 
 import com.kennycason.kakyll.config.ConfigLoader
-import com.kennycason.kakyll.view.render.IdentityPageRenderer
+import com.kennycason.kakyll.view.render.HtmlPageRenderer
 import com.kennycason.kakyll.view.template.*
 import org.apache.commons.io.FilenameUtils
 

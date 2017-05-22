@@ -1,6 +1,6 @@
 package com.kennycason.kakyll.view
 
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
 import org.apache.commons.io.FileUtils
 import java.io.File
@@ -22,6 +22,6 @@ class SassCompiler {
         }
         FileUtils.copyDirectory(
                 directory,
-                File(Constants.Directories.SITE, directoryName))
+                File(Structures.Directories.SITE, directoryName))
     }
 }

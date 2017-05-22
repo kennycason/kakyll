@@ -1,6 +1,6 @@
 package com.kennycason.kakyll.view.render
 
-import com.kennycason.kakyll.view.render.IdentityPageRenderer
+import com.kennycason.kakyll.view.render.HtmlPageRenderer
 import org.apache.commons.io.FilenameUtils
 import java.nio.file.Path
 
@@ -9,7 +9,9 @@ import java.nio.file.Path
  */
 class PageRendererResolver {
     private val renderers = mapOf(
-            Pair("html", IdentityPageRenderer()),
+            Pair("html", HtmlPageRenderer()),
+            Pair("hbs", HtmlPageRenderer()),
+            Pair("handlebars", HtmlPageRenderer()),
             Pair("md", FlexMarkPageRenderer())
     )
 

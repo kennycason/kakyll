@@ -10,9 +10,7 @@ description: My Blog is about random stuff like lorem ipsum and programming. I h
 base_url: http://localhost:8080 # The base url to your blog. e.g. http://hakyll.com
 template_engine: handlebars
 pages:
-    - index.html
-    - about.html
+    - index.hbs
+    - about.hbs
 directories:
     - assets
-
-

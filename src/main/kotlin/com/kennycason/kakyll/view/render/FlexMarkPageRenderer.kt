@@ -2,7 +2,7 @@ package com.kennycason.kakyll.view.render
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.view.render.PageRenderer
 import com.vladsch.flexmark.ext.emoji.EmojiExtension
 import com.vladsch.flexmark.parser.Parser
@@ -46,6 +46,7 @@ class FlexMarkPageRenderer : PageRenderer {
 
         val metadataParser = AbstractYamlFrontMatterVisitor()
         metadataParser.visit(document)
+
         return Page(html, transform(metadataParser.data))
     }
 

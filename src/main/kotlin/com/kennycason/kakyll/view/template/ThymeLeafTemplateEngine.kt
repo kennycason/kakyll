@@ -1,6 +1,6 @@
 package com.kennycason.kakyll.view.template
 
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import org.rythmengine.Rythm
 import org.rythmengine.RythmEngine
 import org.thymeleaf.context.Context
@@ -26,7 +26,7 @@ class ThymeLeafTemplateEngine : TemplateEngine {
     }
 
     private fun buildTemplateEngine(): org.thymeleaf.TemplateEngine {
-        val templatesPath = Paths.get(Constants.Directories.TEMPLATES)
+        val templatesPath = Paths.get(Structures.Directories.TEMPLATES)
         val templateResolver = FileTemplateResolver()
         templateResolver.setTemplateMode(TemplateMode.HTML)
         templateResolver.prefix = templatesPath.toAbsolutePath().toString() + File.separatorChar

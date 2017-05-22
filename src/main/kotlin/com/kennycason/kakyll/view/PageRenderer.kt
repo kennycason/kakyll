@@ -33,6 +33,7 @@ class PageRenderer {
         // convert to html
         val renderer = rendererResolver.resolve(input)
         val page = renderer.render(content)
+        // set all post data for index to render
         page.parameters.put("posts", postsData.map(this::transformToMap).toList())
 
         // applye template engine

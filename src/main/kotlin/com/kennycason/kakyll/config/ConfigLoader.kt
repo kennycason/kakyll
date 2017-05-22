@@ -3,7 +3,7 @@ package com.kennycason.kakyll.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -18,10 +18,10 @@ class ConfigLoader {
     }
 
     fun load(): Config {
-        if (!Files.exists(Paths.get(Constants.Files.CONFIG))) {
-            throw RuntimeException("Config file [${Constants.Files.CONFIG}] could not be found.")
+        if (!Files.exists(Paths.get(Structures.Files.CONFIG))) {
+            throw RuntimeException("Config file [${Structures.Files.CONFIG}] could not be found.")
         }
-        return objectMapper.readValue(File(Constants.Files.CONFIG), Config::class.java)
+        return objectMapper.readValue(File(Structures.Files.CONFIG), Config::class.java)
     }
 
 }

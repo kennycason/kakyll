@@ -12,7 +12,7 @@ import java.nio.file.Path
 /**
  * HtmlRender doesn't need to do anything except return the html as-is
  */
-class IdentityPageRenderer : PageRenderer {
+class HtmlPageRenderer : PageRenderer {
 
     override fun render(content: String) = Page(content)
 

@@ -1,6 +1,6 @@
 package com.kennycason.kakyll.view
 
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
 import com.kennycason.kakyll.view.render.PageRendererResolver
 import com.kennycason.kakyll.view.render.Page
@@ -17,7 +17,7 @@ class PostsLoader {
 
     fun load(): List<Page> {
         val pages = mutableListOf<Page>()
-        val postsDir = File(Constants.Directories.POSTS)
+        val postsDir = File(Structures.Directories.POSTS)
         postsDir.walkTopDown().forEach { file ->
             if (file.isDirectory) { return@forEach }
 
@@ -25,7 +25,9 @@ class PostsLoader {
             val content = file.readText(encoding)
 
             val renderer = rendererResolver.resolve(file.toPath())
-            pages.add(renderer.render(content))
+            val page = renderer.render(content)
+            page.parameters.put("url", config.baseUrl + "/posts/" + file.nameWithoutExtension + ".html")
+            pages.add(page)
         }
 
         return pages

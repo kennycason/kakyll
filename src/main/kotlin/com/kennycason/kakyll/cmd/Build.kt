@@ -1,7 +1,7 @@
 package com.kennycason.kakyll.cmd
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.kennycason.kakyll.Constants
+import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
 import com.kennycason.kakyll.view.DirectoryCopier
 import com.kennycason.kakyll.view.PostsRenderer
@@ -22,7 +22,7 @@ class Build : Cmd {
         Clean().run(args)
 
         // build _site dir
-        val sitePath = Paths.get(Constants.Directories.SITE)
+        val sitePath = Paths.get(Structures.Directories.SITE)
         Files.createDirectories(sitePath)
 
         // copy everything to _site directory
