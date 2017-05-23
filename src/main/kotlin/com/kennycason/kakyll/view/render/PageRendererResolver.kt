@@ -9,7 +9,7 @@ import java.nio.file.Path
  */
 class PageRendererResolver {
     private val renderers = mapOf(
-            Pair("html", HtmlPageRenderer()),
+            Pair("content", HtmlPageRenderer()),
             Pair("hbs", HtmlPageRenderer()),
             Pair("handlebars", HtmlPageRenderer()),
             Pair("md", FlexMarkPageRenderer())

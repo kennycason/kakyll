@@ -1,10 +1,6 @@
-{{> header}}
-
 Posts
 <ol>
-    {{#each posts}}
-    <li>{{ this.title }} - {{ this.author }}</li>
-    {{/each}}
+{{#each posts}}
+    <li><a href="{{ this.url }}">{{ this.title }} - {{ this.author }}</a></li>
+{{/each}}
 </ol>
-
-{{> footer}}

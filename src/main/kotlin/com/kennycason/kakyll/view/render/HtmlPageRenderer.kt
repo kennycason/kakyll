@@ -10,7 +10,7 @@ import com.vladsch.flexmark.util.options.MutableDataSet
 import java.nio.file.Path
 
 /**
- * HtmlRender doesn't need to do anything except return the html as-is
+ * HtmlRender doesn't need to do anything except return the content as-is
  */
 class HtmlPageRenderer : PageRenderer {
 

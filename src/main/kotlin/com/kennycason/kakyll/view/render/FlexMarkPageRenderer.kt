@@ -36,11 +36,11 @@ class FlexMarkPageRenderer : PageRenderer {
                     EmojiExtension.create()))
 
     override fun render(content: String): Page {
-        // first parse template
+        // first parse templates
         val parser = Parser.builder(OPTIONS).build()
         val document = parser.parse(content)
 
-        // render to html
+        // render to content
         val renderer = HtmlRenderer.builder().build()
         val html = renderer.render(document)
 

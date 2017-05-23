@@ -23,5 +23,11 @@ object Structures {
         val INDEX = "index.hbs"
         val ABOUT = "about.hbs"
         val SAMPLE_POST = "welcome-to-kakyll.md"
+
+        object Templates {
+            val HEADER = "header.hbs"
+            val FOOTER = "footer.hbs"
+            val DEFAULT = "default.hbs"
+        }
     }
 }

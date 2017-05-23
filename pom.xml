@@ -70,7 +70,7 @@
             <version>9.4.5.v20170502</version>
         </dependency>
 
-        <!-- template -->
+        <!-- templates -->
         <dependency>
             <groupId>com.github.jknack</groupId>
             <artifactId>handlebars</artifactId>
@@ -99,7 +99,7 @@
 
 
 
-        <!-- markdown -> html -->
+        <!-- markdown -> content -->
         <!--<dependency>-->
             <!--<groupId>org.freemarker</groupId>-->
             <!--<artifactId>freemarker</artifactId>-->

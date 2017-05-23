@@ -10,7 +10,7 @@ import java.nio.file.Paths
  */
 class PostsRenderer {
     private val config = ConfigLoader().load()
-    private val singleFileRenderer = PageRenderer()
+    private val pageRenderer = PageRenderer()
 
     fun render() {
         File(Structures.Directories.SITE, Structures.Directories.POSTS).mkdirs()
@@ -18,7 +18,7 @@ class PostsRenderer {
         val postsDir = File(Structures.Directories.POSTS)
         postsDir.walkTopDown().forEach { file ->
             if (file.isDirectory) { return@forEach }
-            singleFileRenderer.render(file.toPath(), Paths.get(Structures.Directories.SITE))
+            pageRenderer.render(file.toPath(), Paths.get(Structures.Directories.SITE))
         }
 
     }

@@ -28,7 +28,7 @@ class New : Cmd {
         Files.createDirectories(directory)
 
         // create base folders
-        println("Creating default blog template in directory [$directory]")
+        println("Creating default blog templates in directory [$directory]")
         Files.createDirectories(Paths.get(directory.toString(), Structures.Directories.TEMPLATES))
         Files.createDirectories(Paths.get(directory.toString(), Structures.Directories.POSTS))
 
@@ -44,16 +44,17 @@ class New : Cmd {
         copyResourceToFile(Structures.Files.INDEX, directory)
         copyResourceToFile(Structures.Files.ABOUT, directory)
 
-        // copy template files over
+        // copy templates files over
         val templateDirectory = Paths.get(directory.toString(), Structures.Directories.TEMPLATES)
-        copyResourceToFile("template/header.hbs", templateDirectory)
-        copyResourceToFile("template/footer.hbs", templateDirectory)
+        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.DEFAULT}", templateDirectory)
+        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.FOOTER}", templateDirectory)
+        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.HEADER}", templateDirectory)
 
         // copy sample post
         val postsDirectory = Paths.get(directory.toString(), Structures.Directories.POSTS).toFile()
         val postContents = IOUtils.toString(javaClass.getResource(Structures.TEMPLATE_RESOURCE_PATH + Structures.Files.SAMPLE_POST), "UTF-8")
         FileUtils.writeStringToFile(
-                File(postsDirectory, PostDateGenerator().now() + "-" + Structures.Files.SAMPLE_POST),
+                File(postsDirectory, "${PostDateGenerator().now()}-${Structures.Files.SAMPLE_POST}"),
                 postContents,
                 "UTF-8")
     }
