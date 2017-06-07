@@ -22,6 +22,7 @@ import com.vladsch.flexmark.util.options.MutableDataHolder
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
 import java.nio.file.Files
+import java.util.stream.Collectors
 
 
 /**
@@ -55,12 +56,24 @@ class FlexMarkPageRenderer : PageRenderer {
         val transformed = mutableMapOf<String, Any>()
         data.entries.forEach { entry ->
             if (entry.value.size == 1) {
-                transformed.put(entry.key, entry.value.first())
+                transformed.put(entry.key, maybeTransformToList(entry.value.first()))
             } else {
-                transformed.put(entry.key, entry.value)
+                transformed.put(entry.key, maybeTransformToList(entry.value))
             }
         }
         return transformed
+    }
+
+    private fun maybeTransformToList(parameter: Any): Any {
+        if (parameter !is String) { return parameter }
+
+        if (parameter.contains(",")) {
+            return parameter
+                    .split(",")
+                    .map(String::trim)
+                    .toList()
+        }
+        return parameter
     }
 
 }

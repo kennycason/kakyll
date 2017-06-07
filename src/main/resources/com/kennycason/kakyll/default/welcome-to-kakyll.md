@@ -6,7 +6,9 @@ tags: kakyll, kotlin
 
 Post content Here
 
-Below are some sample parameters examples<br/>
-Author: {{ author }}<br/>
-Title: {{ title }}<br/>
 
+```kotlin
+(0.. 100).forEach {
+    println("Kotlin is awesome.")
+}
+```

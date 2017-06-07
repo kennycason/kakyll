@@ -6,21 +6,102 @@
     <title>{{ title }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="icon" type="image/ico" href="/assets/favicon.ico" />
+
+    <!-- css -->
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <!-- js -->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <div id="header">
-        {{> header}}
+<header>
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/index.html" class="navbar-brand">Kakyll</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/index.html">Home</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/about.html">About</a></li>
+            </ul>
+        </nav>
     </div>
-    <div id="content">
-        <div class="left-column">
-            <!-- injecting raw html from previously parsed templates -->
-            {{{ content }}}
+</header>
+<div id="body" class="container">
+    <div class="col-md-8">
+        {{{ content }}}
+    </div>
+    <div class="col-md-4">
+        <!-- Subscribe to my feed widget -->
+        <div class="well text-center">
+            <p class="lead">
+                Don't want to miss updates? Please click the below button!
+            </p>
+            <button class="btn btn-primary btn-lg">Subscribe to my feed</button>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Tags</h4>
+            </div>
+            <div class="panel-body">
+                <ul class="list-inline">
+                    {{#each tags}}
+                        <li><a href="#">{{ this.tag }} ({{ this.count }})</a></li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Latest Posts</h4>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="singlepost.html">1. Aries Sun Sign March 21 - April 19</a></li>
+                <li class="list-group-item"><a href="singlepost.html">2. Taurus Sun Sign April 20 - May 20</a></li>
+                <li class="list-group-item"><a href="singlepost.html">3. Gemini Sun Sign May 21 - June 21</a></li>
+                <li class="list-group-item"><a href="singlepost.html">4. Cancer Sun Sign June 22 - July 22</a></li>
+                <li class="list-group-item"><a href="singlepost.html">5. Leo Sun Sign July 23 - August 22 </a></li>
+            </ul>
         </div>
     </div>
-    <div id="footer">
-        {{> footer}}
+</div>
+<footer>
+    <div class="container">
+        <footer>
+            <div class="container">
+                <hr />
+                <p class="text-center">Copyright © Kakyll 2017. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
+</footer>
 </body>
 </html>

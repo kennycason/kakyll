@@ -30,8 +30,10 @@ kakyll deploy (TODO)
 ```bash
 .
 ├── templates
+|   └── default.hbs
 |   ├── footer.hbs
 |   └── header.hbs
+|   └── post.hbs
 ├── posts
 |   ├── 2017-05-17-birth-of-kakyll.md
 |   └── 2017-05-18-kotlin-is-awesome.md
@@ -82,4 +84,12 @@ Soon Kakyll will also support
 
 ## Markdown Engine
 
-Kakyll used [FlexMark](https://github.com/vsch/flexmark-java) as it's primary markdown renderer. Other options are still being considered. This will also become configurable.
+Kakyll used [FlexMark](https://github.com/vsch/flexmark-java) as it's primary markdown renderer.
+Other options are still being considered.
+This will also become configurable.
+
+
+## Styling Your Blog
+
+By default the blog is themed using Bootstrap based of some examples from [this](http://prideparrot.com/blog/archive/2014/4/blog_template_using_twitter_bootstrap3_part1#creating-a-blog-template) blog post.
+The author, Vijaya Anand, put together an immense and detailed post explaining how to use Bootstrap to create a nice and clean blog template.

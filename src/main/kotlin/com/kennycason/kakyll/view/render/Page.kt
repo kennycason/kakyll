@@ -5,3 +5,4 @@ package com.kennycason.kakyll.view.render
  */
 data class Page(val content: String,
                 val parameters: MutableMap<String, Any> = mutableMapOf())
+

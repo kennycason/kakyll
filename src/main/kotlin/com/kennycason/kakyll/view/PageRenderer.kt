@@ -6,6 +6,7 @@ import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
 import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.PageRendererResolver
+import com.kennycason.kakyll.view.render.Tag
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
@@ -37,19 +38,45 @@ class PageRenderer {
         val page = renderer.render(content)
         // set all post data for index to render
         page.parameters.put("posts", postsData.map(this::transformToMap).toList())
+        page.parameters.put("tags", buildTags(postsData))
 
         // apply templates engine
         val templateEngine = templateEngineResolver.resolve()
         val templateHtml = templateEngine.apply(page.content, page.parameters)
 
         // now inject everything into primary default templates
-        val defaultContent = Paths.get(Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
+        val defaultTemplate = Paths.get(Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
         page.parameters.put("content", templateHtml) // consider clean way to do this
-        val defaultHtml = templateEngine.apply(defaultContent, page.parameters)
+        val defaultHtml = templateEngine.apply(defaultTemplate, page.parameters)
 
         // output content
         val outputFile = File(output.toString(), buildTargetFileName(input))
         outputFile.writeText(defaultHtml, encoding)
+    }
+
+    private fun buildTags(posts: List<Page>): List<Tag> {
+        val tagCloud = mutableMapOf<String, Int>()
+        // make this cleaner, right now it look puke
+        posts.forEach { post ->
+            if (post.parameters.containsKey("tags")) {
+                val tags = post.parameters.get("tags")
+                if (tags is List<*>) {
+                    tags.forEach { tag ->
+                        if (tag is String) {
+                            if (!tagCloud.contains(tag)) {
+                                tagCloud.put(tag, 0)
+                            }
+                            tagCloud.put(tag, tagCloud.get(tag)!! + 1)
+                        }
+                    }
+                }
+            }
+        }
+        return tagCloud
+                .entries
+                .map { entry -> Tag(entry.key, entry.value) }
+                .sortedByDescending(Tag::count)
+                .toList()
     }
 
     private fun buildTargetFileName(source: Path) = FilenameUtils.removeExtension(source.toString()) + ".html"
@@ -60,4 +87,5 @@ class PageRenderer {
         flattenedMap.putAll(data.parameters)
         return flattenedMap
     }
+
 }

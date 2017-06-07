@@ -133,6 +133,12 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>2.9.0.pr3</version>
         </dependency>
+        <!-- sass -->
+        <dependency>
+            <groupId>com.darrinholst</groupId>
+            <artifactId>sass-java</artifactId>
+            <version>3.4.4</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

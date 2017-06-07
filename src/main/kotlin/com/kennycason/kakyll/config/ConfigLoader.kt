@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.kennycason.kakyll.Structures
 import java.io.File
+import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -21,7 +22,11 @@ class ConfigLoader {
         if (!Files.exists(Paths.get(Structures.Files.CONFIG))) {
             throw RuntimeException("Config file [${Structures.Files.CONFIG}] could not be found.")
         }
-        return objectMapper.readValue(File(Structures.Files.CONFIG), Config::class.java)
+        return load(File(Structures.Files.CONFIG).inputStream())
+    }
+
+    fun load(inputStream: InputStream): Config {
+        return objectMapper.readValue(inputStream, Config::class.java)
     }
 
 }

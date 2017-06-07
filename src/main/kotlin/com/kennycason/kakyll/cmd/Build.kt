@@ -15,9 +15,10 @@ import java.nio.file.Paths
  * Clean contents of _site directory then rebuild the site.
  */
 class Build : Cmd {
-    private val config = ConfigLoader().load()
 
     override fun run(args: Array<String>) {
+        val config = ConfigLoader().load()
+
         // first clean
         Clean().run(args)
 

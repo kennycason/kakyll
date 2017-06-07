@@ -10,7 +10,7 @@ object Structures {
         val SITE = "_site"
 
         val TEMPLATES = "templates"
-        val POSTS = "posts"
+        val POSTS = "posts" // only used for New command
 
         val ASSETS = "assets"
         val CSS = "css"
@@ -28,6 +28,7 @@ object Structures {
             val HEADER = "header.hbs"
             val FOOTER = "footer.hbs"
             val DEFAULT = "default.hbs"
+            val POST = "post.hbs"
         }
     }
 }

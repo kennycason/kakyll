@@ -3,6 +3,7 @@ package com.kennycason.kakyll.view
 import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
 import java.io.File
+import java.nio.charset.Charset
 import java.nio.file.Paths
 
 /**
@@ -10,16 +11,21 @@ import java.nio.file.Paths
  */
 class PostsRenderer {
     private val config = ConfigLoader().load()
-    private val pageRenderer = PageRenderer()
+    private val postsLoader = PostsLoader()
 
     fun render() {
-        File(Structures.Directories.SITE, Structures.Directories.POSTS).mkdirs()
+        println("Writing posts to directory [${config.posts.directory}]")
+        val outputDir = File(Structures.Directories.SITE, config.posts.directory)
+        outputDir.mkdirs()
 
-        val postsDir = File(Structures.Directories.POSTS)
-        postsDir.walkTopDown().forEach { file ->
-            if (file.isDirectory) { return@forEach }
-            pageRenderer.render(file.toPath(), Paths.get(Structures.Directories.SITE))
+        val posts = postsLoader.load()
+        val encoding = Charset.forName(config.encoding)
+
+        posts.forEach { post ->
+            // output content
+            val outputFile = File(outputDir.path, post.parameters.get("file") as String)
+            outputFile.writeText(post.content, encoding)
         }
-
     }
+
 }

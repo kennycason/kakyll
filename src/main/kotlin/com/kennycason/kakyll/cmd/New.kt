@@ -49,6 +49,7 @@ class New : Cmd {
         copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.DEFAULT}", templateDirectory)
         copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.FOOTER}", templateDirectory)
         copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.HEADER}", templateDirectory)
+        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.POST}", templateDirectory)
 
         // copy sample post
         val postsDirectory = Paths.get(directory.toString(), Structures.Directories.POSTS).toFile()
