@@ -1,4 +1,4 @@
-package com.kennycason.kakyll.view.render
+package com.kennycason.kakyll.view.posts
 
 /**
  * Created by kenny on 6/7/17.

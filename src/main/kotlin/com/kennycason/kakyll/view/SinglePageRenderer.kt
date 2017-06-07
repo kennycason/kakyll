@@ -4,9 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
+import com.kennycason.kakyll.view.posts.PostsLoader
 import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.PageRendererResolver
-import com.kennycason.kakyll.view.render.Tag
+import com.kennycason.kakyll.view.posts.Tag
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
@@ -23,22 +24,22 @@ import java.nio.file.Paths
  * 3. Determine how to render the file to HTML based on extension.
  * 4. Write file out to new location
  */
-class PageRenderer {
+class SinglePageRenderer {
     private val rendererResolver = PageRendererResolver()
     private val templateEngineResolver = TemplateEngineResolver()
-    private val config = ConfigLoader().load()
-    private val postsData = PostsLoader().load()
+
 
     fun render(input: Path, output: Path) {
-        val encoding = Charset.forName(config.encoding)
+        val encoding = Charset.forName(GlobalContext.config.encoding)
         val content = input.toFile().readText(encoding)
 
         // convert to content
         val renderer = rendererResolver.resolve(input)
         val page = renderer.render(content)
-        // set all post data for index to render
-        page.parameters.put("posts", postsData.map(this::transformToMap).toList())
-        page.parameters.put("tags", buildTags(postsData))
+
+        // set all global data
+        page.parameters.put("posts", GlobalContext.posts.map(this::transformToMap).toList())
+        page.parameters.put("tag_cloud", GlobalContext.tags)
 
         // apply templates engine
         val templateEngine = templateEngineResolver.resolve()
@@ -54,30 +55,6 @@ class PageRenderer {
         outputFile.writeText(defaultHtml, encoding)
     }
 
-    private fun buildTags(posts: List<Page>): List<Tag> {
-        val tagCloud = mutableMapOf<String, Int>()
-        // make this cleaner, right now it look puke
-        posts.forEach { post ->
-            if (post.parameters.containsKey("tags")) {
-                val tags = post.parameters.get("tags")
-                if (tags is List<*>) {
-                    tags.forEach { tag ->
-                        if (tag is String) {
-                            if (!tagCloud.contains(tag)) {
-                                tagCloud.put(tag, 0)
-                            }
-                            tagCloud.put(tag, tagCloud.get(tag)!! + 1)
-                        }
-                    }
-                }
-            }
-        }
-        return tagCloud
-                .entries
-                .map { entry -> Tag(entry.key, entry.value) }
-                .sortedByDescending(Tag::count)
-                .toList()
-    }
 
     private fun buildTargetFileName(source: Path) = FilenameUtils.removeExtension(source.toString()) + ".html"
 

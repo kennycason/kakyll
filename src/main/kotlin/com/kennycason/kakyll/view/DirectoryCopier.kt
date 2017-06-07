@@ -1,7 +1,6 @@
 package com.kennycason.kakyll.view
 
 import com.kennycason.kakyll.Structures
-import com.kennycason.kakyll.config.ConfigLoader
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.nio.file.CopyOption
@@ -13,7 +12,6 @@ import java.nio.file.Paths
  *
  */
 class DirectoryCopier {
-    private val config = ConfigLoader().load()
 
     fun copy(directoryName: String) {
         val directory = File(directoryName)
