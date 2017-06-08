@@ -93,3 +93,7 @@ This will also become configurable.
 
 By default the blog is themed using Bootstrap based of some examples from [this](http://prideparrot.com/blog/archive/2014/4/blog_template_using_twitter_bootstrap3_part1#creating-a-blog-template) blog post.
 The author, Vijaya Anand, put together an immense and detailed post explaining how to use Bootstrap to create a nice and clean blog template.
+
+The current default template for a post.
+
+<img src="https://github.com/kennycason/kakyll/blob/master/screenshots/post_sample.png?raw=true"/>
