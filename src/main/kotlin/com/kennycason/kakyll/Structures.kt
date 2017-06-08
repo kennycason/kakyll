@@ -25,8 +25,8 @@ object Structures {
         val SAMPLE_POST = "welcome-to-kakyll.md"
 
         object Templates {
-            val HEADER = "header.hbs"
-            val FOOTER = "footer.hbs"
+//            val HEADER = "header.hbs"
+//            val FOOTER = "footer.hbs"
             val DEFAULT = "default.hbs"
             val POST = "post.hbs"
         }

@@ -56,18 +56,18 @@ class FlexMarkPageRenderer : PageRenderer {
         val transformed = mutableMapOf<String, Any>()
         data.entries.forEach { entry ->
             if (entry.value.size == 1) {
-                transformed.put(entry.key, maybeTransformToList(entry.value.first()))
+                transformed.put(entry.key, maybeTransformToList(entry.key, entry.value.first()))
             } else {
-                transformed.put(entry.key, maybeTransformToList(entry.value))
+                transformed.put(entry.key, maybeTransformToList(entry.key, entry.value))
             }
         }
         return transformed
     }
 
-    private fun maybeTransformToList(parameter: Any): Any {
+    private fun maybeTransformToList(key: String, parameter: Any): Any {
         if (parameter !is String) { return parameter }
 
-        if (parameter.contains(",")) {
+        if (parameter.contains(",") || key == "tags") {
             return parameter
                     .split(",")
                     .map(String::trim)

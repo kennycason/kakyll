@@ -1,5 +1,6 @@
 package com.kennycason.kakyll.view.posts
 
+import com.kennycason.kakyll.exception.KakyllException
 import com.kennycason.kakyll.view.render.Page
 
 /**
@@ -22,6 +23,9 @@ class PostsTagCloudBuilder {
                             tagCloud.put(tag, tagCloud.get(tag)!! + 1)
                         }
                     }
+                }
+                else {
+                    throw KakyllException("tags parameter should be a list. Found [${tags!!::class}]")
                 }
             }
         }

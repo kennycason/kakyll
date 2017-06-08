@@ -1,7 +1,7 @@
 package com.kennycason.kakyll.cmd
 
 import com.kennycason.kakyll.Structures
-import com.kennycason.kakyll.util.PostDateGenerator
+import com.kennycason.kakyll.util.DateParser
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 import java.io.File
@@ -47,15 +47,15 @@ class New : Cmd {
         // copy templates files over
         val templateDirectory = Paths.get(directory.toString(), Structures.Directories.TEMPLATES)
         copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.DEFAULT}", templateDirectory)
-        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.FOOTER}", templateDirectory)
-        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.HEADER}", templateDirectory)
+//        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.FOOTER}", templateDirectory)
+//        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.HEADER}", templateDirectory)
         copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.POST}", templateDirectory)
 
         // copy sample post
         val postsDirectory = Paths.get(directory.toString(), Structures.Directories.POSTS).toFile()
         val postContents = IOUtils.toString(javaClass.getResource(Structures.TEMPLATE_RESOURCE_PATH + Structures.Files.SAMPLE_POST), "UTF-8")
         FileUtils.writeStringToFile(
-                File(postsDirectory, "${PostDateGenerator().now()}-${Structures.Files.SAMPLE_POST}"),
+                File(postsDirectory, "${DateParser().now()}-${Structures.Files.SAMPLE_POST}"),
                 postContents,
                 "UTF-8")
     }
