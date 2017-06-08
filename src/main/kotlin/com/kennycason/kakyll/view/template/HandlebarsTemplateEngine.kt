@@ -2,16 +2,6 @@ package com.kennycason.kakyll.view.template
 
 import com.github.jknack.handlebars.Handlebars
 import com.github.jknack.handlebars.io.FileTemplateLoader
-import groovy.text.SimpleTemplateEngine
-import groovy.text.markup.MarkupTemplateEngine
-import org.jtwig.JtwigModel
-import org.jtwig.JtwigTemplate
-import org.jtwig.environment.DefaultEnvironmentConfiguration
-import org.jtwig.environment.EnvironmentConfiguration
-import org.jtwig.resource.resolver.ReferenceRelativeResourceResolver
-import org.jtwig.resource.resolver.RelativeResourceResolver
-import org.rythmengine.Rythm
-import org.rythmengine.RythmEngine
 import java.io.StringWriter
 import java.nio.file.Files
 import java.nio.file.Path

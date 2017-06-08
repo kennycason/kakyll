@@ -3,7 +3,7 @@
 
 ## Install
 
-TODO
+TODO (brew)
 
 ## Getting Started
 
@@ -73,9 +73,9 @@ directories:
 
 ## Template Engine
 
-Currently the only supported template engine is Handlebars, but there will be more to come.
+Currently the only supported template engine is `Handlebars`, but there will be more to come.
 
-Soon Kakyll will also support
+Planned to support:
 - Groovy Simple Template Engine
 - Rythm
 - Thymeleaf

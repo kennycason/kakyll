@@ -7,13 +7,11 @@ import org.apache.commons.io.FilenameUtils
 
 /**
  * Determine which templates engine to use based on the configuration file.
+ *
+ * Only supports handlebars for now.
  */
 class TemplateEngineResolver {
     private val templateEngines = mapOf(
-//            Pair("rythm", RythmTemplateEngine()),
-//            Pair("groovy", GroovySimpleTemplateEngine()),
-//            Pair("thymeleaf", ThymeLeafTemplateEngine()),
-//            Pair("jtwig", JTwigTemplateEngine()),
             Pair("handlebars", HandlebarsTemplateEngine())
     )
 
