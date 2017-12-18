@@ -62,7 +62,7 @@ class New : Cmd {
 
     private fun parseDirectory(args: Array<String>): Path {
         if (args.size < 2) {
-            throw RuntimeException("Unable to parse directory name. Try: 'hakyll new my_site_directory'")
+            throw RuntimeException("Unable to parse directory name. Try: 'kakyll new my_site_directory'")
         }
         return Paths.get(args[1])
     }

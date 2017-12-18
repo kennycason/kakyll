@@ -1,6 +1,7 @@
 package com.kennycason.kakyll.cmd
 
 import com.kennycason.kakyll.Structures
+import com.kennycason.kakyll.util.FileChangeDetector
 import com.sun.net.httpserver.HttpHandler
 import com.sun.net.httpserver.HttpServer
 import org.apache.commons.io.FileUtils
@@ -32,6 +33,9 @@ class Serve : Cmd {
 
         System.setProperty("org.eclipse.jetty.LEVEL", "INFO")
 
+        // start parallel thread to watch for changes
+        Thread(FileChangeDetector()).start()
+
         val server = Server()
         val connector = ServerConnector(server)
         connector.port = 8080
@@ -47,6 +51,7 @@ class Serve : Cmd {
         server.setHandler(handlerList)
         server.start()
         server.join()
+
     }
 
 

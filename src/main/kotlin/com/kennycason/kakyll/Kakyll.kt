@@ -16,7 +16,8 @@ class Kakyll {
             Pair("clean", Clean()),
             Pair("build", Build()),
             Pair("serve", Serve()),
-            Pair("version", Version())
+            Pair("version", Version()),
+            Pair("deploy", Deploy())
     )
 
     fun run(args: Array<String>) {

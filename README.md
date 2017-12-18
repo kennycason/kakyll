@@ -22,7 +22,7 @@ This will have pre-generate a sample blog and a pre-configured default blog stru
 kakyll clean
 kakyll build
 kakyll serve (also performs build)
-kakyll deploy (TODO)
+kakyll deploy
 
 
 ## Blog Structure
@@ -64,6 +64,11 @@ email: you@email.com
 description: My Blog is about random stuff like lorem ipsum and programming. I hope you enjoy.
 base_url: http://localhost:8080 # The base url to your blog. e.g. http://hakyll.com
 template_engine: handlebars
+deploy: rsync -avz ....         # command to execut to deploy contents in _site/*
+encoding: UTF-8                 # encoding of files, defaults to UTF-8
+posts:                          # configuration for your blog's posts
+    directory: posts            # directory where your posts are located
+    template: post.hbs          # optional template for posts
 pages:
     - index.html
     - about.html

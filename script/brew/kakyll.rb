@@ -7,13 +7,6 @@ class Call < Formula
   def install
     libexec.install "kakyll-1.0.0.jar"
     bin.write_jar_script libexec/"kakyll-1.0.0.jar", "call"
-    puts "Finished installing Kakyll 1.0.0"
-  end
-
-  def server_script(server_jar); <<-EOS.undent
-    #!/bin/bash
-    exec java -cp #{server_jar} com.kennycason.kakyll.KakyllKt "$@"
-  EOS
   end
 
   test do

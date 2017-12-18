@@ -34,7 +34,6 @@ class PostsRenderer {
 
             // if no template was provided return as-is, it will be injected into default.hbs
             if (config.posts.template.isBlank()) {
-                println("Loading posts from directory [${config.posts.directory}] and applying default template")
 
                 // only apply default template
                 post.parameters.put("content", post.content)
@@ -47,7 +46,6 @@ class PostsRenderer {
                 outputFile.writeText(templateHtml, encoding)
             }
             else { // else inject into custom template for posts. this will further be injected into default.hbs
-                println("Loading posts from directory [${config.posts.directory}] and applying template [${config.posts.template}]")
 
                 // apply provided template
                 val providedTemplate = Paths.get(

@@ -13,6 +13,7 @@ data class Config(var title: String = "",
                   var baseUrl: String = "",
                   var templateEngine: String = "",
                   var encoding: String = "UTF-8",
+                  var deploy: String = "",
                   var posts: Posts = Posts("post", ""),
                   var pages: MutableList<String> = mutableListOf(),
                   var directories: MutableList<String> = mutableListOf())
