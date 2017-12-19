@@ -47,10 +47,9 @@ class FileChangeDetector : Runnable {
                     TrueFileFilter.INSTANCE,
                     TrueFileFilter.INSTANCE)
                     .forEach { file ->
-                        if (file.lastModified() < lastCheck) {
-                            return@forEach
-                        }
-                        if (file.name.contains("_site")) {
+                        if (file.lastModified() < lastCheck
+                                || file.absoluteFile.toString().contains("_site") 
+                                || file.absoluteFile.toString() == currentPath.toString()) { // sometimes changes are registered to root dir, ignore
                             return@forEach
                         }
 
@@ -62,14 +61,21 @@ class FileChangeDetector : Runnable {
             // check for new/deleted files
             val key = directoryWatcher.take()
             key.pollEvents().forEach { it ->
+                val changedPath = it.context() as Path
+                if (changedPath.toAbsolutePath().toString().contains("_site")) {
+                    return@forEach
+                }
+
                 when (it.kind().name()) {
-                    "ENTRY_CREATE", "ENTRY_DELETE" -> {
-                        val changedPath = it.context() as Path
-                        if (!changedPath.toAbsolutePath().toString().contains("_site")) {
-                            println("file [${changedPath.toFile().absoluteFile}] changed, rebuild site")
-                            Build().run(arrayOf())
-                        }
+                    "ENTRY_CREATE" -> {
+                        println("file [${changedPath.toFile().absoluteFile}] created, rebuild site")
+                        Build().run(arrayOf())
                     }
+                    "ENTRY_DELETE" -> {
+                        println("file [${changedPath.toFile().absoluteFile}] deleted, rebuild site")
+                        Build().run(arrayOf())
+                    }
+
                 }
 
             }
