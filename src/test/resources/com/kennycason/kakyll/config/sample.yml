@@ -3,7 +3,7 @@ email: you@email.com
 description: My Blog is about random stuff.
 base_url: http://localhost:8080 # The base url to your blog. e.g. http://hakyll.com
 template_engine: handlebars
-deploy: ""
+deploy: rsync -avz --delete --checksum _site/* username@yoursite.com:/home/user/public_html/
 posts:
     directory: posts
     template: post.hbs

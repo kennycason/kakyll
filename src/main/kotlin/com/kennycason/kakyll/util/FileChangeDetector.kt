@@ -48,7 +48,7 @@ class FileChangeDetector : Runnable {
                     TrueFileFilter.INSTANCE)
                     .forEach { file ->
                         if (file.lastModified() < lastCheck
-                                || file.absoluteFile.toString().contains("_site") 
+                                || file.absoluteFile.toString().contains("_site")
                                 || file.absoluteFile.toString() == currentPath.toString()) { // sometimes changes are registered to root dir, ignore
                             return@forEach
                         }
