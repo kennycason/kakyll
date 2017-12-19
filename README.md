@@ -3,7 +3,9 @@
 
 ## Install
 
-TODO (brew)
+```bash
+brew install https://raw.githubusercontent.com/kennycason/kakyll/master/script/brew/kakyll.rb
+```
 
 ## Getting Started
 
