@@ -1,6 +1,13 @@
 package com.kennycason.kakyll.util
 
 import com.kennycason.kakyll.cmd.Build
+import com.kennycason.kakyll.cmd.Clean
+import org.apache.commons.io.FileUtils
+import org.apache.commons.io.filefilter.AgeFileFilter
+import org.apache.commons.io.filefilter.NameFileFilter
+import org.apache.commons.io.filefilter.NotFileFilter
+import org.apache.commons.io.filefilter.TrueFileFilter
+import java.io.FileFilter
 import java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY
 import java.nio.file.StandardWatchEventKinds.ENTRY_DELETE
 import java.nio.file.StandardWatchEventKinds.ENTRY_CREATE
@@ -16,32 +23,56 @@ import kotlin.concurrent.fixedRateTimer
  * TODO ignore _site/
  * TODO speed up
  */
+fun main(args: Array<String>) {
+    FileChangeDetector().run()
+}
+
 class FileChangeDetector : Runnable {
 
     override fun run() {
         val currentPath = Paths.get(System.getProperty("user.dir"))
         val directoryWatcher = currentPath.fileSystem.newWatchService()
+
         registerRecursive(currentPath, directoryWatcher)
 
         println("Watching [$currentPath] for changes")
 
+        // handle file changes in more simplistic os-agnostic way.
+        // file watcher detects changes in directories when file contents change and propagates change oddly.
+        // only use file watcher for detecting deletions and new files.
+        var lastCheck = System.currentTimeMillis()
         while (true) {
-            val key = directoryWatcher.take()
+            // check for file modifications
+            FileUtils.iterateFilesAndDirs(currentPath.toFile(),
+                    TrueFileFilter.INSTANCE,
+                    TrueFileFilter.INSTANCE)
+                    .forEach { file ->
+                        if (file.lastModified() < lastCheck) {
+                            return@forEach
+                        }
+                        if (file.name.contains("_site")) {
+                            return@forEach
+                        }
 
-            // watch each event on the folder
-            if (key.pollEvents().isNotEmpty()) {
-                println("Detected changes, rebuild site")
-                Build().run(arrayOf())
+                        println("file [${file.absoluteFile}] changed, rebuild site")
+                        Build().run(arrayOf())
+                    }
+            lastCheck = System.currentTimeMillis()
+
+            // check for new/deleted files
+            val key = directoryWatcher.take()
+            key.pollEvents().forEach { it ->
+                when (it.kind().name()) {
+                    "ENTRY_CREATE", "ENTRY_DELETE" -> {
+                        val changedPath = it.context() as Path
+                        if (!changedPath.toAbsolutePath().toString().contains("_site")) {
+                            println("file [${changedPath.toFile().absoluteFile}] changed, rebuild site")
+                            Build().run(arrayOf())
+                        }
+                    }
+                }
+
             }
-//            key.pollEvents().forEach { it ->
-//                when(it.kind().name()){
-//                    "ENTRY_CREATE" -> println("${it.context()} was created")
-//                    "ENTRY_MODIFY" -> println("${it.context()} was modified")
-//                    "OVERFLOW" -> println("${it.context()} overflow")
-//                    "ENTRY_DELETE" -> println("${it.context()} was deleted")
-//                    else -> println("${it.context()} unknown")
-//                }
-//            }
             key.reset()
         }
     }

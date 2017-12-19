@@ -29,7 +29,7 @@ class Serve : Cmd {
             Build().run(args)
         }
 
-        println("Starting server on " + 8080)
+        println("Starting server on http://localhost:8080")
 
         System.setProperty("org.eclipse.jetty.LEVEL", "INFO")
 

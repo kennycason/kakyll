@@ -10,13 +10,7 @@ import com.kennycason.kakyll.view.posts.PostsTagCloudBuilder
  * Load the context once and only once
  */
 object GlobalContext {
-    val posts by lazy {
-        PostsLoader().load()
-    }
-    val tags by lazy {
-        PostsTagCloudBuilder().build(posts)
-    }
-    val config by lazy {
-        ConfigLoader().load()
-    }
+    fun posts() = PostsLoader().load()
+    fun tags() = PostsTagCloudBuilder().build(posts())
+    fun config() = ConfigLoader().load()
 }

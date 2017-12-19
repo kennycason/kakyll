@@ -20,9 +20,9 @@ class PostsLoader {
     private val dateParser = DateParser()
 
     fun load(): List<Page> {
-        val config = GlobalContext.config
+        val config = GlobalContext.config()
         val pages = mutableListOf<Page>()
-        val postsDir = File(GlobalContext.config.posts.directory)
+        val postsDir = File(config.posts.directory)
 
         postsDir.walkTopDown().forEach { file ->
             if (file.isDirectory) { return@forEach }
@@ -38,6 +38,7 @@ class PostsLoader {
             // set some basic parameters for template
             val url = config.baseUrl + "/posts/" + file.nameWithoutExtension + ".html"
 
+            page.parameters.put("original_file", file.name)
             page.parameters.put("file", file.nameWithoutExtension + ".html")
             page.parameters.put("url", url)
             page.parameters.put("content", page.content)

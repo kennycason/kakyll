@@ -32,7 +32,9 @@ class Deploy : Cmd {
             Build().run(args)
         }
 
-        println("Executing deploy command [${GlobalContext.config.deploy}]")
+        val config = GlobalContext.config()
+
+        println("Executing deploy command [${config.deploy}]")
 
         // TODO make this not tied to /bin/bash
         // quick hack to work with my rsync command that has wildcard...
@@ -40,7 +42,7 @@ class Deploy : Cmd {
                 .exec(arrayOf<String>(
                         "/bin/bash",
                         "-c",
-                        GlobalContext.config.deploy
+                        config.deploy
                 ))
 
         val reader = BufferedReader(InputStreamReader(process.inputStream))

@@ -17,7 +17,9 @@ import java.nio.file.Paths
 class Build : Cmd {
 
     override fun run(args: Array<String>) {
-        val config = GlobalContext.config
+        println("Building site")
+
+        val config = GlobalContext.config()
 
         // first clean
         Clean().run(args)

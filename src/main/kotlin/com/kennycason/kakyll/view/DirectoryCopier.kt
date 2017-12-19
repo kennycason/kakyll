@@ -14,6 +14,8 @@ import java.nio.file.Paths
 class DirectoryCopier {
 
     fun copy(directoryName: String) {
+        println("└ Copying directory [$directoryName]")
+
         val directory = File(directoryName)
         if (!directory.exists()) {
             throw RuntimeException("Directory [$directoryName] does not exist.")

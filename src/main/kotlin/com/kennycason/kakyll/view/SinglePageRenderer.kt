@@ -30,7 +30,13 @@ class SinglePageRenderer {
 
 
     fun render(input: Path, output: Path) {
-        val encoding = Charset.forName(GlobalContext.config.encoding)
+        println("└ Rendering [${input.toAbsolutePath()}]")
+
+        val config = GlobalContext.config()
+        val posts = GlobalContext.posts()
+        val tags = GlobalContext.tags()
+
+        val encoding = Charset.forName(config.encoding)
         val content = input.toFile().readText(encoding)
 
         // convert to content
@@ -38,8 +44,8 @@ class SinglePageRenderer {
         val page = renderer.render(content)
 
         // set all global data
-        page.parameters.put("posts", GlobalContext.posts.map(this::transformToMap).toList())
-        page.parameters.put("tag_cloud", GlobalContext.tags)
+        page.parameters.put("posts", posts.map(this::transformToMap).toList())
+        page.parameters.put("tag_cloud", tags)
 
         // apply templates engine
         val templateEngine = templateEngineResolver.resolve()

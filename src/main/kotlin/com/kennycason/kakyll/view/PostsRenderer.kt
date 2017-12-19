@@ -18,19 +18,24 @@ class PostsRenderer {
     private val templateEngineResolver = TemplateEngineResolver()
 
     fun render() {
-        val config = GlobalContext.config
-        println("Writing posts to directory [${config.posts.directory}]")
+        val config = GlobalContext.config()
+        val posts = GlobalContext.posts()
+        val tags = GlobalContext.tags()
+
+        println("└ Writing posts to directory [${config.posts.directory}]")
         val outputDir = File(Structures.Directories.SITE, config.posts.directory)
         outputDir.mkdirs()
 
-        val encoding = Charset.forName(GlobalContext.config.encoding)
+        val encoding = Charset.forName(config.encoding)
 
         val templateEngine = templateEngineResolver.resolve()
 
-        GlobalContext.posts.forEach { post ->
+        posts.forEach { post ->
+            println("     └ ${post.parameters["original_file"]}")
+
             // apply template for global parameters
-            post.parameters.put("posts", GlobalContext.posts.map(this::transformToMap).toList())
-            post.parameters.put("tag_cloud", GlobalContext.tags)
+            post.parameters.put("posts", posts.map(this::transformToMap).toList())
+            post.parameters.put("tag_cloud", tags)
 
             // if no template was provided return as-is, it will be injected into default.hbs
             if (config.posts.template.isBlank()) {
