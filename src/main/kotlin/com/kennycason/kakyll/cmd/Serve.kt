@@ -23,11 +23,7 @@ import java.nio.file.Paths
 class Serve : Cmd {
 
     override fun run(args: Array<String>) {
-        val sitePath = Paths.get(Structures.Directories.SITE)
-        if (!Files.exists(sitePath)) {
-            println("Building site")
-            Build().run(args)
-        }
+        Build().run(args)
 
         println("Starting server on http://localhost:8080")
 
@@ -43,7 +39,7 @@ class Serve : Cmd {
 
         val resourceHandler = ResourceHandler()
         resourceHandler.isDirectoriesListed = true
-        resourceHandler.resourceBase = Structures.Directories.SITE + "/"
+        resourceHandler.resourceBase =  Structures.Directories.SITE + "/"
         resourceHandler.cacheControl = "no-cache"
 
         val handlerList = HandlerList()
@@ -51,8 +47,6 @@ class Serve : Cmd {
         server.setHandler(handlerList)
         server.start()
         server.join()
-
     }
-
 
 }

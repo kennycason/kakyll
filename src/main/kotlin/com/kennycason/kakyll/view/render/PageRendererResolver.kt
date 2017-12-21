@@ -8,11 +8,14 @@ import java.nio.file.Path
  * Created by kenny on 5/18/17.
  */
 class PageRendererResolver {
+    private val NO_OP_PAGE_RENDERER = NoOpPageRenderer()
+
     private val renderers = mapOf(
             Pair("html", HtmlPageRenderer()),
             Pair("hbs", HtmlPageRenderer()),
             Pair("handlebars", HtmlPageRenderer()),
-            Pair("md", FlexMarkPageRenderer())
+            Pair("md", FlexMarkPageRenderer()),
+            Pair("markdown", FlexMarkPageRenderer())
     )
 
     fun resolve(path: Path): PageRenderer {
@@ -20,7 +23,7 @@ class PageRendererResolver {
         renderers[extension]?.let { renderer ->
             return renderer
         }
-        throw RuntimeException("Could not find Html Renderer for file extensions [${extension}]")
+        return NO_OP_PAGE_RENDERER
     }
 
 }

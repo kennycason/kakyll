@@ -35,6 +35,7 @@ class Build : Cmd {
         config.directories.forEach { directory ->
             DirectoryCopier().copy(directory)
         }
+
         PostsRenderer().render()
     }
 

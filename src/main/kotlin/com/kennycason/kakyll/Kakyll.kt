@@ -1,6 +1,7 @@
 package com.kennycason.kakyll
 
 import com.kennycason.kakyll.cmd.*
+import com.kennycason.kakyll.view.GlobalContext
 
 /**
  * The primary entry point into Kakyll
@@ -29,7 +30,6 @@ class Kakyll {
             throw RuntimeException("Unknown command [$command]. Valid commands are: ${commands.keys}")
         }
         commands.get(command)?.run(args)
-
     }
 
 }

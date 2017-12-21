@@ -23,9 +23,9 @@ import kotlin.concurrent.fixedRateTimer
  * TODO ignore _site/
  * TODO speed up
  */
-fun main(args: Array<String>) {
-    FileChangeDetector().run()
-}
+//fun main(args: Array<String>) {
+//    FileChangeDetector().run()
+//}
 
 class FileChangeDetector : Runnable {
 

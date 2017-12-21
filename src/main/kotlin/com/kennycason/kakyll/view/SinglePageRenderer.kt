@@ -31,6 +31,9 @@ class SinglePageRenderer {
 
     fun render(input: Path, output: Path) {
         println("└ Rendering [${input.toAbsolutePath()}]")
+        if (!input.toFile().exists()) {
+            println("    └ Skipping, File not found.")
+        }
 
         val config = GlobalContext.config()
         val posts = GlobalContext.posts()
