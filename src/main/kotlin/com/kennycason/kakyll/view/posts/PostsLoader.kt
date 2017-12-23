@@ -2,6 +2,7 @@ package com.kennycason.kakyll.view.posts
 
 import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.Posts
+import com.kennycason.kakyll.util.Colors
 import com.kennycason.kakyll.util.DateParser
 import com.kennycason.kakyll.view.GlobalContext
 import com.kennycason.kakyll.view.render.PageRendererResolver
@@ -25,7 +26,7 @@ class PostsLoader {
         val postsDir = File(config.posts.directory)
 
         postsDir.walkTopDown().forEach { file ->
-            if (file.isDirectory) { return@forEach }
+            if (file.isDirectory || shouldSkip(file.absolutePath)) { return@forEach }
 
             try {
                 // load file raw text
@@ -50,10 +51,12 @@ class PostsLoader {
                 pages.add(page)
 
             } catch (e: RuntimeException) {
-                println("failed to render page: [${file.name}] due to [${e.message}]")
+                println("${Colors.ANSI_RED}failed to render page: [${file.name}] due to [${e.message}]${Colors.ANSI_RESET}")
             }
         }
         return pages.sortedByDescending { page -> page.parameters.get("timestamp") as Long }
     }
+
+    private fun shouldSkip(path: String) = path.contains(".DS_Store", true)
 
 }

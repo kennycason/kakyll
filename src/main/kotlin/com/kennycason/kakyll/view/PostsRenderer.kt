@@ -2,6 +2,7 @@ package com.kennycason.kakyll.view
 
 import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
+import com.kennycason.kakyll.util.Colors
 import com.kennycason.kakyll.view.posts.PostsLoader
 import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
@@ -70,7 +71,7 @@ class PostsRenderer {
                     outputFile.writeText(finalHtml, encoding)
                 }
             } catch (e: RuntimeException) {
-                println("failed to render page: [${post.parameters["original_file"]}] due to [${e.message}]")
+                println("${Colors.ANSI_RED}Failed to render page: [${post.parameters["original_file"]}] due to [${e.message}]${Colors.ANSI_RESET}")
             }
         }
     }
