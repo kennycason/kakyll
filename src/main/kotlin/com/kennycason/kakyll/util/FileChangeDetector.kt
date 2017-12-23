@@ -20,12 +20,7 @@ import kotlin.concurrent.fixedRateTimer
  * Scan the present working directory
  *
  * TODO handle incremental rebuilds
- * TODO ignore _site/
- * TODO speed up
  */
-//fun main(args: Array<String>) {
-//    FileChangeDetector().run()
-//}
 
 class FileChangeDetector : Runnable {
 
@@ -37,42 +32,25 @@ class FileChangeDetector : Runnable {
 
         println("Watching [$currentPath] for changes")
 
-        // handle file changes in more simplistic os-agnostic way.
-        // file watcher detects changes in directories when file contents change and propagates change oddly.
-        // only use file watcher for detecting deletions and new files.
-        var lastCheck = System.currentTimeMillis()
         while (true) {
-            // check for file modifications
-            FileUtils.iterateFilesAndDirs(currentPath.toFile(),
-                    TrueFileFilter.INSTANCE,
-                    TrueFileFilter.INSTANCE)
-                    .forEach { file ->
-                        if (file.lastModified() < lastCheck
-                                || file.absoluteFile.toString().contains("_site")
-                                || file.absoluteFile.toString() == currentPath.toString()) { // sometimes changes are registered to root dir, ignore
-                            return@forEach
-                        }
-
-                        println("file [${file.absoluteFile}] changed, rebuild site")
-                        Build().run(arrayOf())
-                    }
-            lastCheck = System.currentTimeMillis()
-
-            // check for new/deleted files
             val key = directoryWatcher.take()
             key.pollEvents().forEach { it ->
                 val changedPath = it.context() as Path
-                if (changedPath.toAbsolutePath().toString().contains("_site")) {
+                if (shouldSkip(changedPath)) {
                     return@forEach
                 }
 
                 when (it.kind().name()) {
                     "ENTRY_CREATE" -> {
-                        println("file [${changedPath.toFile().absoluteFile}] created, rebuild site")
+                        println("file [${changedPath.toFile().absoluteFile}] created")
+                        Build().run(arrayOf())
+                    }
+                    "ENTRY_MODIFY" -> {
+                        println("file [${changedPath.toFile().absoluteFile}] modified")
                         Build().run(arrayOf())
                     }
                     "ENTRY_DELETE" -> {
-                        println("file [${changedPath.toFile().absoluteFile}] deleted, rebuild site")
+                        println("file [${changedPath.toFile().absoluteFile}] deleted")
                         Build().run(arrayOf())
                     }
 
@@ -86,16 +64,26 @@ class FileChangeDetector : Runnable {
     private fun registerRecursive(root: Path, watchService: WatchService) {
         // register all sub directories
         Files.walkFileTree(root, object : SimpleFileVisitor<Path>() {
-            @Throws(IOException::class)
             override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
+                // println("register -> " + dir)
+                if (shouldSkip(dir)) {
+                    // println(" - skipping")
+                    return FileVisitResult.SKIP_SUBTREE
+                }
+
                 dir.register(watchService,
                         StandardWatchEventKinds.ENTRY_CREATE,
                         StandardWatchEventKinds.ENTRY_MODIFY,
-                        StandardWatchEventKinds.OVERFLOW,
                         StandardWatchEventKinds.ENTRY_DELETE)
                 return FileVisitResult.CONTINUE
             }
         })
     }
 
+    private fun shouldSkip(path: Path) = shouldSkip(path.toAbsolutePath().toString())
+
+    private fun shouldSkip(path: String) =
+            path.contains("_site")
+                    || path.contains(".DS_Store", true)
+                    || path.contains(".git")
 }
