@@ -22,6 +22,7 @@ object Structures {
         val CONFIG = "config.yml"
         val INDEX = "index.hbs"
         val ABOUT = "about.hbs"
+        val TAGS = "tags.hbs"
         val SAMPLE_POST = "welcome-to-kakyll.md"
 
         object Templates {

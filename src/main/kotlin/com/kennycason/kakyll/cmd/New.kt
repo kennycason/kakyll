@@ -50,12 +50,11 @@ class New : Cmd {
         copyResourceToFile(Structures.Files.CONFIG, directory)
         copyResourceToFile(Structures.Files.INDEX, directory)
         copyResourceToFile(Structures.Files.ABOUT, directory)
+        copyResourceToFile(Structures.Files.TAGS, directory)
 
         // copy templates files over
         val templateDirectory = Paths.get(directory.toString(), Structures.Directories.TEMPLATES)
         copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.DEFAULT}", templateDirectory)
-//        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.FOOTER}", templateDirectory)
-//        copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.HEADER}", templateDirectory)
         copyResourceToFile("${Structures.Directories.TEMPLATES}/${Structures.Files.Templates.POST}", templateDirectory)
 
         // copy sample post

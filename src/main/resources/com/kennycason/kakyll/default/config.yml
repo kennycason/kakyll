@@ -7,7 +7,8 @@
 title: My Blog Title
 email: you@email.com
 description: My Blog is about random stuff like lorem ipsum and programming. I hope you enjoy.
-base_url: http://localhost:8080 # The base url to your blog. e.g. http://hakyll.com
+base_url: http://localhost:8080 # The base url to your blog. e.g. http://kakyll.com
+deploy: rsync -avz --delete --checksum _site/* user@yoursite.com/public_html/yoursite.com/
 template_engine: handlebars
 posts:
     directory: posts
@@ -15,5 +16,6 @@ posts:
 pages:
     - index.hbs
     - about.hbs
+    - tags.hbs
 directories:
     - assets
