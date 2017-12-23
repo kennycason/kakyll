@@ -19,11 +19,18 @@ class New : Cmd {
     override fun run(args: Array<String>) {
         println("Generating new blog")
 
+        // parse directory
+        if (args.size < 2) {
+            println("Unable to parse directory name. Try: 'kakyll new my_site_directory'")
+            return
+        }
+        val directory = Paths.get(args[1])
+
         // attempt to create directory
-        val directory = parseDirectory(args)
         println("Creating directory: " + directory)
         if (Files.exists(directory)) {
-            throw RuntimeException("Unable to create blog because directory [$directory] already exists/")
+            println("Unable to create blog because directory [$directory] already exists/")
+            return
         }
         Files.createDirectories(directory)
 
@@ -58,13 +65,6 @@ class New : Cmd {
                 File(postsDirectory, "${DateParser().now()}-${Structures.Files.SAMPLE_POST}"),
                 postContents,
                 "UTF-8")
-    }
-
-    private fun parseDirectory(args: Array<String>): Path {
-        if (args.size < 2) {
-            throw RuntimeException("Unable to parse directory name. Try: 'kakyll new my_site_directory'")
-        }
-        return Paths.get(args[1])
     }
 
     private fun copyResourceToFile(resource: String, destination: Path) {

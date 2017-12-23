@@ -1,5 +1,6 @@
 package com.kennycason.kakyll.view.render
 
+import com.kennycason.kakyll.exception.KakyllException
 import com.kennycason.kakyll.view.GlobalContext
 import com.kennycason.kakyll.view.render.HtmlPageRenderer
 import com.kennycason.kakyll.view.template.*
@@ -20,7 +21,7 @@ class TemplateEngineResolver {
         templateEngines[config.templateEngine]?.let { renderer ->
             return renderer
         }
-        throw RuntimeException("Could not find templates engine for [${config.templateEngine}]")
+        throw KakyllException("Could not find templates engine for [${config.templateEngine}]")
     }
 
 }

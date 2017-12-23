@@ -1,6 +1,7 @@
 package com.kennycason.kakyll.view
 
 import com.kennycason.kakyll.Structures
+import com.kennycason.kakyll.util.Colors
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.nio.file.CopyOption
@@ -18,7 +19,8 @@ class DirectoryCopier {
 
         val directory = File(directoryName)
         if (!directory.exists()) {
-            throw RuntimeException("Directory [$directoryName] does not exist.")
+            println("${Colors.ANSI_RED}    └ Skipping, directory not found.${Colors.ANSI_RESET}")
+            return
         }
         FileUtils.copyDirectory(
                 directory,

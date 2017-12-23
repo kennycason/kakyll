@@ -23,11 +23,13 @@ class Kakyll {
 
     fun run(args: Array<String>) {
         if (args.isEmpty()) {
-            throw RuntimeException("Must provide command. Valid commands are: ${commands.keys}")
+            println("Must provide command. Valid commands are: ${commands.keys}")
+            return
         }
         val command = args[0].toLowerCase()
         if (!commands.containsKey(command)) {
-            throw RuntimeException("Unknown command [$command]. Valid commands are: ${commands.keys}")
+            println("Unknown command [$command]. Valid commands are: ${commands.keys}")
+            return
         }
         commands.get(command)?.run(args)
     }

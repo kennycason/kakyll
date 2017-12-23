@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.config.ConfigLoader
+import com.kennycason.kakyll.util.Colors
 import com.kennycason.kakyll.view.posts.PostsLoader
 import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.PageRendererResolver
@@ -32,7 +33,8 @@ class SinglePageRenderer {
     fun render(input: Path, output: Path) {
         println("└ Rendering [${input.toAbsolutePath()}]")
         if (!input.toFile().exists()) {
-            println("    └ Skipping, File not found.")
+            println("${Colors.ANSI_RED}    └ Skipping, file not found.${Colors.ANSI_RESET}")
+            return
         }
 
         val config = GlobalContext.config

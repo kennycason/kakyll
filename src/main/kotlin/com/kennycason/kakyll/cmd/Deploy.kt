@@ -28,7 +28,6 @@ class Deploy : Cmd {
     override fun run(args: Array<String>) {
         val sitePath = Paths.get(Structures.Directories.SITE)
         if (!Files.exists(sitePath)) {
-            println("Building site")
             Build().run(args)
         }
 

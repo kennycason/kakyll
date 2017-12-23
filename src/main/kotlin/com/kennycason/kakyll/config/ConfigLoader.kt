@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.kennycason.kakyll.Structures
+import com.kennycason.kakyll.exception.KakyllException
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Files
@@ -20,7 +21,7 @@ class ConfigLoader {
 
     fun load(): Config {
         if (!Files.exists(Paths.get(Structures.Files.CONFIG))) {
-            throw RuntimeException("Config file [${Structures.Files.CONFIG}] could not be found.")
+            throw KakyllException("Config file [${Structures.Files.CONFIG}] could not be found.")
         }
         return load(File(Structures.Files.CONFIG).inputStream())
     }

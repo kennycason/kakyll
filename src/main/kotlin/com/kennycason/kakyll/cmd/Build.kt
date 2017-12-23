@@ -2,6 +2,7 @@ package com.kennycason.kakyll.cmd
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.kennycason.kakyll.Structures
+import com.kennycason.kakyll.util.Colors
 import com.kennycason.kakyll.view.DirectoryCopier
 import com.kennycason.kakyll.view.GlobalContext
 import com.kennycason.kakyll.view.PostsRenderer
@@ -35,7 +36,7 @@ class Build : Cmd {
             try {
                 SinglePageRenderer().render(Paths.get(page), sitePath)
             } catch (e: RuntimeException) {
-                println("failed to render page: [$page] due to [${e.message}]")
+                println("${Colors.ANSI_RED}Failed to render page: [$page] due to [${e.message}]${Colors.ANSI_RESET}")
             }
         }
         config.directories.forEach { directory ->
