@@ -5,7 +5,7 @@
         <div class="group1 col-sm-6 col-md-6">
             <span class="glyphicon glyphicon-tag"></span>
             {{#each tags}}
-                <a href="#">{{ this }}</a>
+                <a class="tag" href="/tags/{{ this }}.html">{{ this }}</a>
             {{/each}}
             by {{ author }}
         </div>

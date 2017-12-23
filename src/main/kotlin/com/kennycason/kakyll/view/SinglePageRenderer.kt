@@ -29,7 +29,6 @@ class SinglePageRenderer {
     private val rendererResolver = PageRendererResolver()
     private val templateEngineResolver = TemplateEngineResolver()
 
-
     fun render(input: Path, output: Path) {
         println("└ Rendering [${input.toAbsolutePath()}]")
         if (!input.toFile().exists()) {
@@ -60,13 +59,13 @@ class SinglePageRenderer {
         // now inject everything into primary default templates
         val defaultTemplate = Paths.get(Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
         page.parameters.put("content", templateHtml) // consider clean way to do this
-        val defaultHtml = templateEngine.apply(defaultTemplate, page.parameters)
+
+        val renderedHtml = templateEngine.apply(defaultTemplate, page.parameters)
 
         // output content
         val outputFile = File(output.toString(), buildTargetFileName(input))
-        outputFile.writeText(defaultHtml, encoding)
+        outputFile.writeText(renderedHtml, encoding)
     }
-
 
     private fun buildTargetFileName(source: Path) = FilenameUtils.removeExtension(source.toString()) + ".html"
 

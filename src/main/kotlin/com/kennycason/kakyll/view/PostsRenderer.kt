@@ -22,7 +22,7 @@ class PostsRenderer {
         val posts = GlobalContext.posts
         val tags = GlobalContext.tags
 
-        println("└ Writing posts to directory [${config.posts.directory}]")
+        println("└ Rendering posts to directory [${config.posts.directory}]")
         val outputDir = File(Structures.Directories.SITE, config.posts.directory)
         outputDir.mkdirs()
 

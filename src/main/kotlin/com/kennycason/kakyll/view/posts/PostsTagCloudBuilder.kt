@@ -31,7 +31,11 @@ class PostsTagCloudBuilder {
         }
         return tagCloud
                 .entries
-                .map { entry -> Tag(entry.key, entry.value) }
+                .map { entry -> Tag(
+                        tag = entry.key,
+                        count = entry.value,
+                        url = "/tags/" + entry.key + ".html" // TODO standardize
+                        ) }
                 .sortedByDescending(Tag::count)
                 .toList()
     }
