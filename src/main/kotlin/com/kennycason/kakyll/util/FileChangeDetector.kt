@@ -34,6 +34,7 @@ class FileChangeDetector : Runnable {
 
         while (true) {
             val key = directoryWatcher.take()
+            var changed = false
             key.pollEvents().forEach { it ->
                 val changedPath = it.context() as Path
                 if (shouldSkip(changedPath)) {
@@ -41,23 +42,16 @@ class FileChangeDetector : Runnable {
                 }
 
                 when (it.kind().name()) {
-                    "ENTRY_CREATE" -> {
-                        println("file [${changedPath.toFile().absoluteFile}] created")
-                        Build().run(arrayOf())
-                    }
-                    "ENTRY_MODIFY" -> {
-                        println("file [${changedPath.toFile().absoluteFile}] modified")
-                        Build().run(arrayOf())
-                    }
-                    "ENTRY_DELETE" -> {
-                        println("file [${changedPath.toFile().absoluteFile}] deleted")
-                        Build().run(arrayOf())
-                    }
-
+                    "ENTRY_CREATE" -> println("file [${changedPath.toFile().absoluteFile}] created")
+                    "ENTRY_MODIFY" -> println("file [${changedPath.toFile().absoluteFile}] modified")
+                    "ENTRY_DELETE" -> println("file [${changedPath.toFile().absoluteFile}] deleted")
                 }
-
+                changed = true
             }
             key.reset()
+            if (changed) {
+                Build().run(arrayOf())
+            }
         }
     }
 

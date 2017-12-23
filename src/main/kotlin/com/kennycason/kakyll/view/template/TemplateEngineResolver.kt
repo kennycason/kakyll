@@ -16,7 +16,7 @@ class TemplateEngineResolver {
     )
 
     fun resolve(): TemplateEngine {
-        val config = GlobalContext.config()
+        val config = GlobalContext.config
         templateEngines[config.templateEngine]?.let { renderer ->
             return renderer
         }

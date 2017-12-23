@@ -7,10 +7,17 @@ import com.kennycason.kakyll.view.posts.PostsTagCloudBuilder
 /**
  * Created by kenny on 6/7/17.
  *
- * Load the context once and only once
+ * Load the context lazily, refresh when changes happen
  */
 object GlobalContext {
-    fun posts() = PostsLoader().load()
-    fun tags() = PostsTagCloudBuilder().build(posts())
-    fun config() = ConfigLoader().load()
+    var config = ConfigLoader().load()
+    var posts = PostsLoader().load()
+    var tags = PostsTagCloudBuilder().build(posts)
+
+    fun load() {
+        config = ConfigLoader().load()
+        posts = PostsLoader().load()
+        tags = PostsTagCloudBuilder().build(posts)
+    }
+
 }

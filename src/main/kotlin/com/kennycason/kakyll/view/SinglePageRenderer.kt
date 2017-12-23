@@ -35,9 +35,9 @@ class SinglePageRenderer {
             println("    └ Skipping, File not found.")
         }
 
-        val config = GlobalContext.config()
-        val posts = GlobalContext.posts()
-        val tags = GlobalContext.tags()
+        val config = GlobalContext.config
+        val posts = GlobalContext.posts
+        val tags = GlobalContext.tags
 
         val encoding = Charset.forName(config.encoding)
         val content = input.toFile().readText(encoding)
@@ -47,6 +47,7 @@ class SinglePageRenderer {
         val page = renderer.render(content)
 
         // set all global data
+        page.parameters.put("file", input.fileName)
         page.parameters.put("posts", posts.map(this::transformToMap).toList())
         page.parameters.put("tag_cloud", tags)
 

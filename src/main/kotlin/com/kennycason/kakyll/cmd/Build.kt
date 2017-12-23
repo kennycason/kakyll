@@ -19,7 +19,9 @@ class Build : Cmd {
     override fun run(args: Array<String>) {
         println("Building site")
 
-        val config = GlobalContext.config()
+        GlobalContext.load()
+
+        val config = GlobalContext.config
 
         // first clean
         Clean().run(args)
@@ -30,7 +32,11 @@ class Build : Cmd {
 
         // copy everything to _site directory
         config.pages.forEach { page ->
-            SinglePageRenderer().render(Paths.get(page), sitePath)
+            try {
+                SinglePageRenderer().render(Paths.get(page), sitePath)
+            } catch (e: RuntimeException) {
+                println("failed to render page: [$page] due to [${e.message}]")
+            }
         }
         config.directories.forEach { directory ->
             DirectoryCopier().copy(directory)

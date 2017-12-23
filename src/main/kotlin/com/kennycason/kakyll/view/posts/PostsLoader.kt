@@ -20,32 +20,38 @@ class PostsLoader {
     private val dateParser = DateParser()
 
     fun load(): List<Page> {
-        val config = GlobalContext.config()
+        val config = GlobalContext.config
         val pages = mutableListOf<Page>()
         val postsDir = File(config.posts.directory)
 
         postsDir.walkTopDown().forEach { file ->
             if (file.isDirectory) { return@forEach }
 
-            // load file raw text
-            val encoding = Charset.forName(config.encoding)
-            val content = file.readText(encoding)
+            try {
+                // load file raw text
+                val encoding = Charset.forName(config.encoding)
+                val content = file.readText(encoding)
 
-            // render markdown, html, hbs, to html
-            val renderer = rendererResolver.resolve(file.toPath())
-            val page: Page = renderer.render(content)
+                // render markdown, html, hbs, to html
+                val renderer = rendererResolver.resolve(file.toPath())
+                val page: Page = renderer.render(content)
 
-            // set some basic parameters for template
-            val url = config.baseUrl + "/posts/" + file.nameWithoutExtension + ".html"
+                // set some basic parameters for template
+                val relativeUrl = "/posts/" + file.nameWithoutExtension + ".html"
 
-            page.parameters.put("original_file", file.name)
-            page.parameters.put("file", file.nameWithoutExtension + ".html")
-            page.parameters.put("url", url)
-            page.parameters.put("content", page.content)
-            page.parameters.put("date", dateParser.parseToString(file.nameWithoutExtension))
-            page.parameters.put("timestamp", dateParser.parse(file.nameWithoutExtension).millis)
+                page.parameters.put("original_file", file.name)
+                page.parameters.put("file", file.nameWithoutExtension + ".html")
+                page.parameters.put("url", relativeUrl)
+                page.parameters.put("absolute_url", config.baseUrl + relativeUrl)
+                page.parameters.put("content", page.content)
+                page.parameters.put("date", dateParser.parseToString(file.nameWithoutExtension))
+                page.parameters.put("timestamp", dateParser.parse(file.nameWithoutExtension).millis)
 
-            pages.add(page)
+                pages.add(page)
+
+            } catch (e: RuntimeException) {
+                println("failed to render page: [${file.name}] due to [${e.message}]")
+            }
         }
         return pages.sortedByDescending { page -> page.parameters.get("timestamp") as Long }
     }

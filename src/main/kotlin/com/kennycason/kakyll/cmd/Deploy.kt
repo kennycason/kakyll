@@ -32,7 +32,7 @@ class Deploy : Cmd {
             Build().run(args)
         }
 
-        val config = GlobalContext.config()
+        val config = GlobalContext.config
 
         println("Executing deploy command [${config.deploy}]")
 
