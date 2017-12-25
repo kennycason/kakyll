@@ -45,4 +45,9 @@ class Build : Cmd {
         TagPageRenderer().render()
     }
 
+
+    val methods = arrayOf("happens [earlier/later/at the wrong time] every year",
+            "drifts out of sync with the [sun/moon/zodiac/atomic clock in Colorado]",
+            "drifts out of sync with the [Gregorian/Mayan/lunar/iPhone] calendar",
+            "might [not happen/happen twice] this year")
 }
