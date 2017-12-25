@@ -1,5 +1,12 @@
 # Kakyll
 
+Kakyll is a static site generator similar to Hakyll (Haskell) or Jekyll (Ruby) except in Kotlin.
+
+
+## Sample
+
+A quick sample of a Kakyll default site. Eventually will the primary Kakyll site.
+[Click Here](http://kakyll.com)
 
 ## Install
 
@@ -41,14 +48,14 @@ kakyll deploy
 |   └── 2017-05-18-kotlin-is-awesome.md
 ├──-assets
 |   ├── css
-|   |   ├── style.css
-|   |   └── style.scss
+|   |   └── style.css
 |   ├── js
 |   |   └── scripts.js
 |   ├── images
 |   |   └── my_logo.png
 ├── index.hbs
 ├── about.hbs
+├── tags.hbs
 └── config.yml
 ```
 
@@ -74,20 +81,14 @@ posts:                          # configuration for your blog's posts
 pages:
     - index.html
     - about.html
+    - tags.html
 directories:
     - assets
 ```
 
 ## Template Engine
 
-Currently the only supported template engine is `Handlebars`, but there will be more to come.
-
-Planned to support:
-- Groovy Simple Template Engine
-- Rythm
-- Thymeleaf
-- Jtwig
-- Liquid
+Currently the only supported template engine is `Handlebars`
 
 ## Markdown Engine
 
