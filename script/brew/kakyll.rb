@@ -1,8 +1,8 @@
 class Kakyll < Formula
   desc "Kakyll: Static Site Generator in Kotlin"
   homepage "https://github.com/kennycason/kakyll"
-  url "http://search.maven.org/remotecontent?filepath=com/kennycason/kakyll/1.0/kakyll-1.1.jar"
-  sha256 "665d27300c13c2dbb1a06b70eafe3bc7448756468bf60dfadf5ec7384902b973"
+  url "http://search.maven.org/remotecontent?filepath=com/kennycason/kakyll/1.1/kakyll-1.1.jar"
+  sha256 "599ae86eb73cd88aca79e126735eaf297dc826bb3e67aa5d0e9cd53d90b64cab"
 
   def install
     libexec.install "kakyll-1.1.jar"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=1.0
+VERSION=1.1
 PROGRAM_NAME=kakyll
 JAR_FILE=$PROGRAM_NAME-$VERSION.jar
 NEXUS_URL=http://search.maven.org/remotecontent?filepath=com/kennycason/$PROGRAM_NAME/$VERSION/$JAR_FILE
