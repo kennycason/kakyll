@@ -2,7 +2,7 @@
 
 Kakyll is a static site generator similar to Hakyll (Haskell) or Jekyll (Ruby) except in Kotlin.
 
-The primary webiste for Kakyll is (http://kakyll.com)[http://kakyll.com]. Kakyll's homesite is also built with Kakyll.
+The primary webiste for Kakyll is [http://kakyll.com](http://kakyll.com). Kakyll's homesite is also built with Kakyll.
 
 ## Install
 
