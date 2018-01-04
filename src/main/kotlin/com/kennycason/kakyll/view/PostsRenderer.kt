@@ -76,7 +76,7 @@ class PostsRenderer {
         }
     }
 
-    // remove copy paste (SinglePageRenderer.kt
+    // remove copy paste SinglePageRenderer.kt
     private fun transformToMap(data: Page): MutableMap<String, Any> {
         val flattenedMap = mutableMapOf<String, Any>()
         flattenedMap.put("content", data.content)

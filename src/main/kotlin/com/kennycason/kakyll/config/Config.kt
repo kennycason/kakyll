@@ -1,5 +1,6 @@
 package com.kennycason.kakyll.config
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.kennycason.kakyll.view.render.Page
 
 /**
@@ -14,9 +15,12 @@ data class Config(var title: String = "",
                   var templateEngine: String = "",
                   var encoding: String = "UTF-8",
                   var deploy: String = "",
-                  var posts: Posts = Posts("post", ""),
+                  var posts: Posts = Posts(),
+                  var tags: Tags = Tags(),
                   var pages: MutableList<String> = mutableListOf(),
                   var directories: MutableList<String> = mutableListOf())
 
-data class Posts(var directory: String = "",
+data class Posts(var directory: String = "post",
                  var template: String = "")
+
+data class Tags(var template: String = "index.hbs")

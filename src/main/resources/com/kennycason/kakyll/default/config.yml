@@ -17,5 +17,7 @@ pages:
     - index.hbs
     - about.hbs
     - tags.hbs
+tags:
+    template: index.hbs
 directories:
     - assets

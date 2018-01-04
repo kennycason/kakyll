@@ -46,6 +46,11 @@ class New : Cmd {
         Files.createDirectories(Paths.get(assetsPath.toString(), Structures.Directories.JS))
         Files.createDirectories(Paths.get(assetsPath.toString(), Structures.Directories.IMAGES))
 
+        // copy assets into assets folder
+        copyResourceToFile(
+                "${Structures.Directories.ASSETS}/${Structures.Directories.CSS}/${Structures.Files.CSS}",
+                Paths.get(assetsPath.toString(), Structures.Directories.CSS))
+
         // copy root files over
         copyResourceToFile(Structures.Files.CONFIG, directory)
         copyResourceToFile(Structures.Files.INDEX, directory)

@@ -38,7 +38,7 @@ class PostsLoader {
                 val page: Page = renderer.render(content)
 
                 // set some basic parameters for template
-                val relativeUrl = "/posts/" + file.nameWithoutExtension + ".html"
+                val relativeUrl = "/${config.posts.directory}/" + file.nameWithoutExtension + ".html"
 
                 page.parameters.put("original_file", file.name)
                 page.parameters.put("file", file.nameWithoutExtension + ".html")

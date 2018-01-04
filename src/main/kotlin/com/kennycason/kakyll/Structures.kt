@@ -25,6 +25,8 @@ object Structures {
         val TAGS = "tags.hbs"
         val SAMPLE_POST = "welcome-to-kakyll.md"
 
+        val CSS = "style.css"
+
         object Templates {
             val DEFAULT = "default.hbs"
             val POST = "post.hbs"

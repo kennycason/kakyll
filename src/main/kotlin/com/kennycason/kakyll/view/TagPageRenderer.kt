@@ -34,7 +34,7 @@ class TagPageRenderer {
 
         // read template file
         val encoding = Charset.forName(config.encoding)
-        val tagsTemplatePath = Paths.get(Structures.Files.INDEX) // tags pages are just lists of posts, like the index. make separate file for this to avoid confusion
+        val tagsTemplatePath = Paths.get(config.tags.template) // tags pages are just lists of posts, like the index. optionally configure custom listing template
         val content = tagsTemplatePath.toFile().readText(encoding)
 
         val renderer = rendererResolver.resolve(tagsTemplatePath)
