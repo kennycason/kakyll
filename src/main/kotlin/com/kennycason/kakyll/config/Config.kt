@@ -18,9 +18,11 @@ data class Config(var title: String = "",
                   var posts: Posts = Posts(),
                   var tags: Tags = Tags(),
                   var pages: MutableList<String> = mutableListOf(),
-                  var directories: MutableList<String> = mutableListOf())
+                  var directories: MutableList<Directory> = mutableListOf())
 
 data class Posts(var directory: String = "post",
                  var template: String = "")
 
 data class Tags(var template: String = "index.hbs")
+
+data class Directory(val name: String = "", val render: Boolean = false)

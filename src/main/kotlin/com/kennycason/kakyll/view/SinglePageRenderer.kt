@@ -9,6 +9,7 @@ import com.kennycason.kakyll.view.posts.PostsLoader
 import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.PageRendererResolver
 import com.kennycason.kakyll.view.posts.Tag
+import com.kennycason.kakyll.view.render.NoOpPageRenderer
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
@@ -43,8 +44,18 @@ class SinglePageRenderer {
         val encoding = Charset.forName(config.encoding)
         val content = input.toFile().readText(encoding)
 
-        // convert to content
+
         val renderer = rendererResolver.resolve(input)
+
+        // if no renderer just copy as is
+        if (renderer is NoOpPageRenderer) {
+            val outputFile = File(output.toFile(), input.toString())
+            println("    └ No Renderer for file [$input], copying as-is to [${outputFile}]")
+            FileUtils.copyFile(input.toFile(), outputFile)
+            return
+        }
+
+        // convert to content
         val page = renderer.render(content)
 
         // set all global data

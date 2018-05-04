@@ -51,7 +51,8 @@ class PostsRenderer {
                     // output content
                     val outputFile = File(outputDir.path, post.parameters.get("file") as String)
                     outputFile.writeText(templateHtml, encoding)
-                } else { // else inject into custom template for posts. this will further be injected into default.hbs
+                }
+                else { // else inject into custom template for posts. this will further be injected into default.hbs
 
                     // apply provided template
                     val providedTemplate = Paths.get(

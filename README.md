@@ -81,7 +81,7 @@ pages:
 tags:
     template: index.html
 directories:
-    - assets
+    - name: assets
 ```
 
 ## Template Engine

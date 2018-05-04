@@ -20,4 +20,6 @@ pages:
 tags:
     template: index.hbs
 directories:
-    - assets
+    - name: assets
+
+

@@ -24,7 +24,10 @@ class ConfigLoaderTest {
         assertEquals("post.hbs", config.posts.template)
         assertEquals("index.hbs", config.pages[0])
         assertEquals("about.hbs", config.pages[1])
-        assertEquals("assets", config.directories[0])
+        assertEquals("assets", config.directories[0].name)
+        assertEquals(false, config.directories[0].render)
+        assertEquals("news", config.directories[1].name)
+        assertEquals(true, config.directories[1].render)
     }
 
 }
