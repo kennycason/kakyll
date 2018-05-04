@@ -1,6 +1,5 @@
 package com.kennycason.kakyll.view.render
 
-import com.kennycason.kakyll.view.render.HtmlPageRenderer
 import org.apache.commons.io.FilenameUtils
 import java.nio.file.Path
 
@@ -8,7 +7,7 @@ import java.nio.file.Path
  * Created by kenny on 5/18/17.
  */
 class PageRendererResolver {
-    private val NO_OP_PAGE_RENDERER = NoOpPageRenderer()
+    private val noOpPageRenderer = NoOpPageRenderer()
 
     private val renderers = mapOf(
             Pair("html", HtmlPageRenderer()),
@@ -23,7 +22,7 @@ class PageRendererResolver {
         renderers[extension]?.let { renderer ->
             return renderer
         }
-        return NO_OP_PAGE_RENDERER
+        return noOpPageRenderer
     }
 
 }

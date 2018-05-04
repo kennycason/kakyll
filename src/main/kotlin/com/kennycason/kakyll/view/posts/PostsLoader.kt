@@ -40,13 +40,13 @@ class PostsLoader {
                 // set some basic parameters for template
                 val relativeUrl = "/${config.posts.directory}/" + file.nameWithoutExtension + ".html"
 
-                page.parameters.put("original_file", file.name)
-                page.parameters.put("file", file.nameWithoutExtension + ".html")
-                page.parameters.put("url", relativeUrl)
-                page.parameters.put("absolute_url", config.baseUrl + relativeUrl)
-                page.parameters.put("content", page.content)
-                page.parameters.put("date", dateParser.parseToString(file.nameWithoutExtension))
-                page.parameters.put("timestamp", dateParser.parse(file.nameWithoutExtension).millis)
+                page.parameters["original_file"] = file.name
+                page.parameters["file"] = file.nameWithoutExtension + ".html"
+                page.parameters["url"] = relativeUrl
+                page.parameters["absolute_url"] = config.baseUrl + relativeUrl
+                page.parameters["content"] = page.content
+                page.parameters["date"] = dateParser.parseToString(file.nameWithoutExtension)
+                page.parameters["timestamp"] = dateParser.parse(file.nameWithoutExtension).millis
 
                 pages.add(page)
 

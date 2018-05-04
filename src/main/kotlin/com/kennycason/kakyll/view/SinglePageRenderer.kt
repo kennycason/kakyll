@@ -48,9 +48,9 @@ class SinglePageRenderer {
         val page = renderer.render(content)
 
         // set all global data
-        page.parameters.put("file", input.fileName)
-        page.parameters.put("posts", posts.map(this::transformToMap).toList())
-        page.parameters.put("tag_cloud", tags)
+        page.parameters["file"] = input.fileName
+        page.parameters["posts"] = posts.map(this::transformToMap).toList()
+        page.parameters["tag_cloud"] = tags
 
         // apply templates engine
         val templateEngine = templateEngineResolver.resolve()
@@ -58,7 +58,7 @@ class SinglePageRenderer {
 
         // now inject everything into primary default templates
         val defaultTemplate = Paths.get(Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
-        page.parameters.put("content", templateHtml) // consider clean way to do this
+        page.parameters["content"] = templateHtml // consider clean way to do this
 
         val renderedHtml = templateEngine.apply(defaultTemplate, page.parameters)
 
@@ -71,7 +71,7 @@ class SinglePageRenderer {
 
     private fun transformToMap(data: Page): MutableMap<String, Any> {
         val flattenedMap = mutableMapOf<String, Any>()
-        flattenedMap.put("content", data.content)
+        flattenedMap["content"] = data.content
         flattenedMap.putAll(data.parameters)
         return flattenedMap
     }

@@ -44,21 +44,21 @@ class TagPageRenderer {
             val page = renderer.render(content)
 
 //            println("tag filter: ${tag.tag}")
-            page.parameters.put("file", tag.tag + ".html") // TODO ?
-            page.parameters.put("posts", posts
+            page.parameters["file"] = tag.tag + ".html" // TODO ?
+            page.parameters["posts"] = posts
                     .map(this::flattenToMap)
                     .filter { data ->
-//                        println("    ${tag.tag} -> ${data["tags"]}")
+                        //                        println("    ${tag.tag} -> ${data["tags"]}")
                         (data.containsKey("tags")
-                        && (data["tags"] as List<String>).contains(tag.tag))
+                                && (data["tags"] as List<*>).contains(tag.tag))
                     }
-                    .toList())
+                    .toList()
 
 //            (page.parameters.get("posts") as List<MutableMap<String, Any>>).forEach { page ->
 //                println("  after -> ${page["tags"]} -> ${page["url"]}")
 //            }
 
-            page.parameters.put("tag_cloud", tags)
+            page.parameters["tag_cloud"] = tags
 
             // apply templates engine
             val templateEngine = templateEngineResolver.resolve()
@@ -66,7 +66,7 @@ class TagPageRenderer {
 
             // now inject everything into primary default templates
             val defaultTemplate = Paths.get(Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
-            page.parameters.put("content", templateHtml) // consider clean way to do this
+            page.parameters["content"] = templateHtml // consider clean way to do this
 
             val renderedHtml = templateEngine.apply(defaultTemplate, page.parameters)
 
@@ -80,7 +80,7 @@ class TagPageRenderer {
 
     private fun flattenToMap(data: Page): MutableMap<String, Any> {
         val flattenedMap = mutableMapOf<String, Any>()
-        flattenedMap.put("content", data.content)
+        flattenedMap["content"] = data.content
         flattenedMap.putAll(data.parameters)
         return flattenedMap
     }

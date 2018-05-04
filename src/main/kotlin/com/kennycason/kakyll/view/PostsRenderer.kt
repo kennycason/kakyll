@@ -36,14 +36,14 @@ class PostsRenderer {
                 println("     └ ${post.parameters["original_file"]}")
 
                 // apply template for global parameters
-                post.parameters.put("posts", posts.map(this::transformToMap).toList())
-                post.parameters.put("tag_cloud", tags)
+                post.parameters["posts"] = posts.map(this::transformToMap).toList()
+                post.parameters["tag_cloud"] = tags
 
                 // if no template was provided return as-is, it will be injected into default.hbs
                 if (config.posts.template.isBlank()) {
 
                     // only apply default template
-                    post.parameters.put("content", post.content)
+                    post.parameters["content"] = post.content
                     val defaultTemplate = Paths.get(
                             Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
                     val templateHtml = templateEngine.apply(defaultTemplate, post.parameters)
@@ -58,11 +58,11 @@ class PostsRenderer {
                             Structures.Directories.TEMPLATES,
                             config.posts.template).toFile().readText(encoding)
 
-                    post.parameters.put("content", post.content)
+                    post.parameters["content"] = post.content
                     val templateHtml = templateEngine.apply(providedTemplate, post.parameters)
 
                     // now apply default template
-                    post.parameters.put("content", templateHtml)
+                    post.parameters["content"] = templateHtml
                     val defaultTemplate = Paths.get(
                             Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
                     val finalHtml = templateEngine.apply(defaultTemplate, post.parameters)
@@ -79,7 +79,7 @@ class PostsRenderer {
     // remove copy paste SinglePageRenderer.kt
     private fun transformToMap(data: Page): MutableMap<String, Any> {
         val flattenedMap = mutableMapOf<String, Any>()
-        flattenedMap.put("content", data.content)
+        flattenedMap["content"] = data.content
         flattenedMap.putAll(data.parameters)
         return flattenedMap
     }

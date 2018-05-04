@@ -18,9 +18,9 @@ class PostsTagCloudBuilder {
                     tags.forEach { tag ->
                         if (tag is String) {
                             if (!tagCloud.contains(tag)) {
-                                tagCloud.put(tag, 0)
+                                tagCloud[tag] = 0
                             }
-                            tagCloud.put(tag, tagCloud.get(tag)!! + 1)
+                            tagCloud[tag] = tagCloud.get(tag)!! + 1
                         }
                     }
                 }

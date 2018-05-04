@@ -12,7 +12,7 @@
     <url>https://github.com/kennycason/kakyll</url>
 
     <properties>
-        <kotlin.version>1.2.0</kotlin.version>
+        <kotlin.version>1.2.41</kotlin.version>
         <cli.main.class>com.kennycason.kakyll.KakyllKt</cli.main.class>
     </properties>
 

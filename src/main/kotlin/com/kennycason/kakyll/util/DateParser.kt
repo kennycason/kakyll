@@ -18,7 +18,7 @@ class DateParser {
     private val format: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
     private val dateRegex = Pattern.compile("(\\d{4}-\\d{1,2}-\\d{1,2}).*")
 
-    fun now() = DateTime.now().toString(format)
+    fun now(): String = DateTime.now().toString(format)
 
     fun parse(url: String): DateTime {
         val matcher = dateRegex.matcher(url)
@@ -31,6 +31,6 @@ class DateParser {
         return format.parseDateTime(match)
     }
 
-    fun parseToString(url: String) = parse(url).toString(format)
+    fun parseToString(url: String): String = parse(url).toString(format)
 
 }
