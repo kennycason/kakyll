@@ -67,7 +67,7 @@ class FlexMarkPageRenderer : PageRenderer {
     private fun maybeTransformToList(key: String, parameter: Any): Any {
         if (parameter !is String) { return parameter }
 
-        if (parameter.contains(",") || key == "tags") {
+        if (key == "tags") {
             return parameter
                     .split(",")
                     .map(String::trim)
