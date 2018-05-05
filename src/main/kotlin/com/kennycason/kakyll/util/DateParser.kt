@@ -1,10 +1,10 @@
 package com.kennycason.kakyll.util
 
 import com.kennycason.kakyll.exception.KakyllException
+import com.kennycason.kakyll.view.GlobalContext
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
-import java.time.LocalDate
 import java.util.regex.Pattern
 
 /**
@@ -15,22 +15,22 @@ import java.util.regex.Pattern
  * Eventually this will become more customizable
  */
 class DateParser {
-    private val format: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+    private val blogNameDateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
     private val dateRegex = Pattern.compile("(\\d{4}-\\d{1,2}-\\d{1,2}).*")
 
-    fun now(): String = DateTime.now().toString(format)
+    fun now(): String = DateTime.now().toString(blogNameDateFormat)
 
     fun parse(url: String): DateTime {
         val matcher = dateRegex.matcher(url)
         if (!matcher.matches()) {
             throw KakyllException(
                     "Failed to parse date from url. " +
-                    "Expected format is yyyy-MM-dd. Url [$url]")
+                    "Expected blogNameDateFormat is yyyy-MM-dd. Url [$url]")
         }
         val match = matcher.group(1)
-        return format.parseDateTime(match)
+        return blogNameDateFormat.parseDateTime(match)
     }
 
-    fun parseToString(url: String): String = parse(url).toString(format)
+    fun prettyParse(url: String): String = parse(url).toString(DateTimeFormat.forPattern(GlobalContext.config.dateFormat))
 
 }

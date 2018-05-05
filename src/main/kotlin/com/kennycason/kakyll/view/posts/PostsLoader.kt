@@ -1,7 +1,5 @@
 package com.kennycason.kakyll.view.posts
 
-import com.kennycason.kakyll.Structures
-import com.kennycason.kakyll.config.Posts
 import com.kennycason.kakyll.util.Colors
 import com.kennycason.kakyll.util.DateParser
 import com.kennycason.kakyll.view.GlobalContext
@@ -10,7 +8,6 @@ import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
 import java.io.File
 import java.nio.charset.Charset
-import java.nio.file.Paths
 
 /**
  * load all post data into structure for downstream processing
@@ -45,7 +42,7 @@ class PostsLoader {
                 page.parameters["url"] = relativeUrl
                 page.parameters["absolute_url"] = config.baseUrl + relativeUrl
                 page.parameters["content"] = page.content
-                page.parameters["date"] = dateParser.parseToString(file.nameWithoutExtension)
+                page.parameters["date"] = dateParser.prettyParse(file.nameWithoutExtension)
                 page.parameters["timestamp"] = dateParser.parse(file.nameWithoutExtension).millis
 
                 pages.add(page)

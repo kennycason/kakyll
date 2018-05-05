@@ -12,7 +12,7 @@ import java.nio.file.Paths
 class Version : Cmd {
 
     override fun run(args: Array<String>) {
-        println("Kakyll v1.3")
+        println("Kakyll v1.4")
     }
 
 }

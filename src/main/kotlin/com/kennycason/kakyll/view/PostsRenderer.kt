@@ -33,7 +33,7 @@ class PostsRenderer {
 
         posts.forEach { post ->
             try {
-                println("     └ ${post.parameters["original_file"]}")
+                println("    └ ${post.parameters["original_file"]}")
 
                 // apply template for global parameters
                 post.parameters["posts"] = posts.map(this::transformToMap).toList()

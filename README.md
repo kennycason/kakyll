@@ -71,6 +71,7 @@ base_url: http://localhost:8080 # The base url to your blog. e.g. http://hakyll.
 template_engine: handlebars
 deploy: rsync -avz ....         # command to execut to deploy contents in _site/*
 encoding: UTF-8                 # encoding of files, defaults to UTF-8
+date_format: yyyy-dd-MM         # format for date to use in post pages
 posts:                          # configuration for your blog's posts
     directory: posts            # directory where your posts are located
     template: post.hbs          # optional template for posts
