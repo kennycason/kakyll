@@ -2,7 +2,7 @@ class Kakyll < Formula
   desc "Kakyll: Static Site Generator in Kotlin"
   homepage "https://github.com/kennycason/kakyll"
   url "http://search.maven.org/remotecontent?filepath=com/kennycason/kakyll/1.3/kakyll-1.3.jar"
-  sha256 "cacbe242a8ce2fa66c58e22f0cce7f50c67ce29d2c88196506f5bb94c3e36ccb"
+  sha256 "714f20eeb7d8082fbb82c8e7ba26eb31403b91e91f8d9f5e2db76454f6ad8c68"
 
   bottle :unneeded
 
