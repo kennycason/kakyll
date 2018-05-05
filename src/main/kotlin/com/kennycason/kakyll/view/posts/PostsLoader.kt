@@ -54,7 +54,7 @@ class PostsLoader {
         return pages.sortedByDescending { page -> page.parameters.get("timestamp") as Long }
     }
 
-    // handle this more generically 
+    // handle this more generically
     private fun shouldSkip(path: String) = path.contains(".DS_Store", true)
 
 }
