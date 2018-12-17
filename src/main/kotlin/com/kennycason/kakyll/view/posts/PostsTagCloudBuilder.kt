@@ -13,14 +13,14 @@ class PostsTagCloudBuilder {
         // make this cleaner, right now it look puke
         posts.forEach { post ->
             if (post.parameters.containsKey("tags")) {
-                val tags = post.parameters.get("tags")
+                val tags = post.parameters["tags"]
                 if (tags is List<*>) {
                     tags.forEach { tag ->
                         if (tag is String) {
                             if (!tagCloud.contains(tag)) {
                                 tagCloud[tag] = 0
                             }
-                            tagCloud[tag] = tagCloud.get(tag)!! + 1
+                            tagCloud[tag] = tagCloud[tag]!! + 1
                         }
                     }
                 }

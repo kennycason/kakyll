@@ -1,8 +1,5 @@
 package com.kennycason.kakyll.config
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.kennycason.kakyll.view.render.Page
-
 /**
  * Created by kenny on 5/18/17.
  *

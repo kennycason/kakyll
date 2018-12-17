@@ -1,9 +1,7 @@
 package com.kennycason.kakyll.view
 
 import com.kennycason.kakyll.Structures
-import com.kennycason.kakyll.config.ConfigLoader
 import com.kennycason.kakyll.util.Colors
-import com.kennycason.kakyll.view.posts.PostsLoader
 import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
 import java.io.File
@@ -44,8 +42,7 @@ class PostsRenderer {
 
                     // only apply default template
                     post.parameters["content"] = post.content
-                    val defaultTemplate = Paths.get(
-                            Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
+                    val defaultTemplate = Paths.get(Structures.Directories.TEMPLATES, Structures.Files.Templates.DEFAULT).toFile().readText(encoding)
                     val templateHtml = templateEngine.apply(defaultTemplate, post.parameters)
 
                     // output content

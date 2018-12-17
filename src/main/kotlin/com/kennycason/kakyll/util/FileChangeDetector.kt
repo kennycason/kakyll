@@ -1,20 +1,8 @@
 package com.kennycason.kakyll.util
 
 import com.kennycason.kakyll.cmd.Build
-import com.kennycason.kakyll.cmd.Clean
-import org.apache.commons.io.FileUtils
-import org.apache.commons.io.filefilter.AgeFileFilter
-import org.apache.commons.io.filefilter.NameFileFilter
-import org.apache.commons.io.filefilter.NotFileFilter
-import org.apache.commons.io.filefilter.TrueFileFilter
-import java.io.FileFilter
-import java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY
-import java.nio.file.StandardWatchEventKinds.ENTRY_DELETE
-import java.nio.file.StandardWatchEventKinds.ENTRY_CREATE
-import java.io.IOException
 import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
-import kotlin.concurrent.fixedRateTimer
 
 /**
  * Scan the present working directory

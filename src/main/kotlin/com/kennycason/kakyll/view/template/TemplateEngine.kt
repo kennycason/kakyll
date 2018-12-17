@@ -1,8 +1,5 @@
 package com.kennycason.kakyll.view.template
 
-import com.kennycason.kakyll.view.render.Page
-import java.nio.file.Path
-
 /**
  * Created by kenny on 5/18/17.
  */

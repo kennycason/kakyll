@@ -3,8 +3,8 @@ package com.kennycason.kakyll.view.posts
 import com.kennycason.kakyll.util.Colors
 import com.kennycason.kakyll.util.DateParser
 import com.kennycason.kakyll.view.GlobalContext
-import com.kennycason.kakyll.view.render.PageRendererResolver
 import com.kennycason.kakyll.view.render.Page
+import com.kennycason.kakyll.view.render.PageRendererResolver
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
 import java.io.File
 import java.nio.charset.Charset
@@ -14,7 +14,6 @@ import java.nio.charset.Charset
  */
 class PostsLoader {
     private val rendererResolver = PageRendererResolver()
-    private val templateEngineResolver = TemplateEngineResolver()
     private val dateParser = DateParser()
 
     fun load(): List<Page> {

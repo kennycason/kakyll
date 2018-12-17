@@ -5,8 +5,6 @@ import com.kennycason.kakyll.util.DateParser
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils
 import java.io.File
-import java.nio.charset.Charset
-import java.nio.file.FileSystem
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths

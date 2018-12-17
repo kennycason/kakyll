@@ -1,7 +1,6 @@
 package com.kennycason.kakyll
 
 import com.kennycason.kakyll.cmd.*
-import com.kennycason.kakyll.view.GlobalContext
 
 /**
  * The primary entry point into Kakyll
@@ -12,7 +11,7 @@ fun main(args: Array<String>) {
 
 class Kakyll {
 
-    private val commands = mapOf<String, Cmd>(
+    private val commands = mapOf(
             Pair("new", New()),
             Pair("clean", Clean()),
             Pair("build", Build()),
@@ -31,7 +30,7 @@ class Kakyll {
             println("Unknown command [$command]. Valid commands are: ${commands.keys}")
             return
         }
-        commands.get(command)?.run(args)
+        commands[command]?.run(args)
     }
 
 }

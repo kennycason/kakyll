@@ -4,32 +4,32 @@ package com.kennycason.kakyll
  * Created by kenny on 5/17/17.
  */
 object Structures {
-    val TEMPLATE_RESOURCE_PATH = "/com/kennycason/kakyll/default/"
+    const val TEMPLATE_RESOURCE_PATH = "/com/kennycason/kakyll/default/"
 
     object Directories {
-        val SITE = "_site"
+        const val SITE = "_site"
 
-        val TEMPLATES = "templates"
-        val POSTS = "posts" // only used for New command
+        const val TEMPLATES = "templates"
+        const val POSTS = "posts" // only used for New command
 
-        val ASSETS = "assets"
-        val CSS = "css"
-        val JS = "js"
-        val IMAGES = "images"
+        const val ASSETS = "assets"
+        const val CSS = "css"
+        const val JS = "js"
+        const val IMAGES = "images"
     }
 
     object Files {
-        val CONFIG = "config.yml"
-        val INDEX = "index.hbs"
-        val ABOUT = "about.hbs"
-        val TAGS = "tags.hbs"
-        val SAMPLE_POST = "welcome-to-kakyll.md"
+        const val CONFIG = "config.yml"
+        const val INDEX = "index.hbs"
+        const val ABOUT = "about.hbs"
+        const val TAGS = "tags.hbs"
+        const val SAMPLE_POST = "welcome-to-kakyll.md"
 
-        val CSS = "style.css"
+        const val CSS = "style.css"
 
         object Templates {
-            val DEFAULT = "default.hbs"
-            val POST = "post.hbs"
+            const val DEFAULT = "default.hbs"
+            const val POST = "post.hbs"
         }
     }
 }

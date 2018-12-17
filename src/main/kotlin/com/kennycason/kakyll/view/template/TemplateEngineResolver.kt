@@ -2,9 +2,8 @@ package com.kennycason.kakyll.view.render
 
 import com.kennycason.kakyll.exception.KakyllException
 import com.kennycason.kakyll.view.GlobalContext
-import com.kennycason.kakyll.view.render.HtmlPageRenderer
-import com.kennycason.kakyll.view.template.*
-import org.apache.commons.io.FilenameUtils
+import com.kennycason.kakyll.view.template.HandlebarsTemplateEngine
+import com.kennycason.kakyll.view.template.TemplateEngine
 
 /**
  * Determine which templates engine to use based on the configuration file.

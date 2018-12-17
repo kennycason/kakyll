@@ -1,19 +1,13 @@
 package com.kennycason.kakyll.view
 
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.kennycason.kakyll.Structures
-import com.kennycason.kakyll.config.ConfigLoader
 import com.kennycason.kakyll.util.Colors
-import com.kennycason.kakyll.view.posts.PostsLoader
+import com.kennycason.kakyll.view.render.NoOpPageRenderer
 import com.kennycason.kakyll.view.render.Page
 import com.kennycason.kakyll.view.render.PageRendererResolver
-import com.kennycason.kakyll.view.posts.Tag
-import com.kennycason.kakyll.view.render.NoOpPageRenderer
 import com.kennycason.kakyll.view.render.TemplateEngineResolver
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
-import org.apache.commons.io.IOUtils
 import java.io.File
 import java.nio.charset.Charset
 import java.nio.file.Path

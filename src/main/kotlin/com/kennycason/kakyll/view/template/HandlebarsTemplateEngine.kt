@@ -2,9 +2,6 @@ package com.kennycason.kakyll.view.template
 
 import com.github.jknack.handlebars.Handlebars
 import com.github.jknack.handlebars.io.FileTemplateLoader
-import java.io.StringWriter
-import java.nio.file.Files
-import java.nio.file.Path
 
 /**
  * Created by kenny on 5/18/17.

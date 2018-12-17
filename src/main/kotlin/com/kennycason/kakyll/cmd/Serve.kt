@@ -2,19 +2,10 @@ package com.kennycason.kakyll.cmd
 
 import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.util.FileChangeDetector
-import com.sun.net.httpserver.HttpHandler
-import com.sun.net.httpserver.HttpServer
-import org.apache.commons.io.FileUtils
-import org.eclipse.jetty.server.LocalConnector
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.server.handler.ContextHandler
+import org.eclipse.jetty.server.ServerConnector
 import org.eclipse.jetty.server.handler.HandlerList
 import org.eclipse.jetty.server.handler.ResourceHandler
-import java.net.InetSocketAddress
-import java.io.IOException
-import org.eclipse.jetty.server.ServerConnector
-import java.nio.file.Files
-import java.nio.file.Paths
 
 
 /**
@@ -43,8 +34,8 @@ class Serve : Cmd {
         resourceHandler.cacheControl = "no-cache"
 
         val handlerList = HandlerList()
-        handlerList.setHandlers(arrayOf(resourceHandler))
-        server.setHandler(handlerList)
+        handlerList.handlers = arrayOf(resourceHandler)
+        server.handler = handlerList
         server.start()
         server.join()
     }
