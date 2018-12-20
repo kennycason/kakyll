@@ -23,11 +23,11 @@ cd my_site
 ```
 This will have pre-generate a sample blog and a pre-configured default blog structure. The blog structure and configuration are explained below.
 
-
-kakyll clean
+```bash
 kakyll build
 kakyll serve (also performs build)
 kakyll deploy
+```
 
 
 ## Blog Structure
@@ -56,6 +56,26 @@ kakyll deploy
 ```
 
 Upon building your site, all contents will be copied to `_site`
+
+## Create A New Post
+
+Via the `new post` command you can programmatically create a new post.
+The new post will be generated where ever the post directory is configured. (default: posts/)
+
+Examples:
+```bash
+kakyll new post "name of post.markdown"
+kakyll new post name of post.md
+kakyll new post hello-world.md
+```
+
+The files are generated in the configured posts directory, file names are normalized, and the current date is automatically prepended.
+
+Notes:
+- Spaces are coerced to dashes (-).
+- Quotes are optional.
+- .md/.markdown extension is required.
+- The current date is automatically prepended to the post file name.
 
 ## Configuration
 

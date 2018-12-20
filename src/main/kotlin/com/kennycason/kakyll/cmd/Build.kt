@@ -15,7 +15,6 @@ class Build : Cmd {
         println("Building site")
 
         GlobalContext.load()
-
         val config = GlobalContext.config
 
         // first clean

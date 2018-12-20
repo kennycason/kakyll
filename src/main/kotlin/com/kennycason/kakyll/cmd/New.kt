@@ -15,8 +15,15 @@ import java.nio.file.Paths
 class New : Cmd {
 
     override fun run(args: Array<String>) {
-        println("Generating new blog")
+        // first check to see if we are creating a new post
+        if (args.size >= 3) {
+            if (args[1] == "post") {
+                NewPost().run(args)
+                return
+            }
+        }
 
+        println("Generating new blog")
         // parse directory
         if (args.size < 2) {
             println("Unable to parse directory name. Try: 'kakyll new my_site_directory'")
