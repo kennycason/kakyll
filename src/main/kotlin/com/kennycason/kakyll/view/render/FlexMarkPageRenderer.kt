@@ -2,7 +2,7 @@ package com.kennycason.kakyll.view.render
 
 import com.vladsch.flexmark.ext.emoji.EmojiExtension
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension
-import com.vladsch.flexmark.ext.tables.TablesExtension
+import com.vladsch.flexmark.ext.gfm.tables.TablesExtension
 import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension
 import com.vladsch.flexmark.html.HtmlRenderer
@@ -15,20 +15,21 @@ import com.vladsch.flexmark.util.options.MutableDataSet
  * Created by kenny on 5/18/17.
  */
 class FlexMarkPageRenderer : PageRenderer {
-    private val OPTIONS: MutableDataHolder = MutableDataSet()
+
+    private val options = MutableDataSet()
             .set(Parser.EXTENSIONS, listOf(
                     YamlFrontMatterExtension.create(),
                     TablesExtension.create(),
                     StrikethroughExtension.create(),
-                    EmojiExtension.create()))
+                    EmojiExtension.create()
+            ))
 
     override fun render(content: String): Page {
         // first parse templates
-        val parser = Parser.builder(OPTIONS).build()
+        val parser = Parser.builder(options).build()
         val document = parser.parse(content)
-
         // render to content
-        val renderer = HtmlRenderer.builder().build()
+        val renderer = HtmlRenderer.builder(options).build()
         val html = renderer.render(document)
 
         val metadataParser = AbstractYamlFrontMatterVisitor()

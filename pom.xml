@@ -93,12 +93,12 @@
         <dependency>
             <groupId>com.vladsch.flexmark</groupId>
             <artifactId>flexmark</artifactId>
-            <version>0.19.4</version>
+            <version>0.35.2</version>
         </dependency>
         <dependency>
             <groupId>com.vladsch.flexmark</groupId>
             <artifactId>flexmark-all</artifactId>
-            <version>0.19.4</version>
+            <version>0.35.2</version>
         </dependency>
 
         <!-- config management -->
