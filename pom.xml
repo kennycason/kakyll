@@ -6,7 +6,7 @@
 
     <groupId>com.kennycason</groupId>
     <artifactId>kakyll</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <name>Kakyll</name>
     <description>Kakyll is a static site generator.</description>
     <url>https://github.com/kennycason/kakyll</url>
