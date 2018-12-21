@@ -19,6 +19,6 @@ Brew install script must contain the updated version and md5 checksums of the fi
 Brew formula in GitHub can be found [here](https://raw.githubusercontent.com/kennycason/kakyll/master/script/brew/kakyll.rb)
 
 md5 checksum can be calculated via:
-`curl -sL https://search.maven.org/remotecontent\?filepath\=com/kennycason/kakyll/1.6/kakyll-1.6.jar | shasum -a 256`
+`curl -sL https://search.maven.org/remotecontent\?filepath\=com/kennycason/kakyll/1.7/kakyll-1.7.jar | shasum -a 256`
 
 Additionally the README must be updated.%
