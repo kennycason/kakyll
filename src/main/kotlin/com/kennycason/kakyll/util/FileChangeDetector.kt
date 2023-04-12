@@ -1,6 +1,7 @@
 package com.kennycason.kakyll.util
 
 import com.kennycason.kakyll.cmd.Build
+import com.kennycason.kakyll.view.GlobalContext
 import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
 
@@ -22,24 +23,27 @@ class FileChangeDetector : Runnable {
 
         while (true) {
             val key = directoryWatcher.take()
-            var changed = false
+//            var changed = false
             key.pollEvents().forEach { it ->
                 val changedPath = it.context() as Path
                 if (shouldSkip(changedPath)) {
                     return@forEach
                 }
 
-                when (it.kind().name()) {
-                    "ENTRY_CREATE" -> println("file [${changedPath.toFile().absoluteFile}] created")
-                    "ENTRY_MODIFY" -> println("file [${changedPath.toFile().absoluteFile}] modified")
-                    "ENTRY_DELETE" -> println("file [${changedPath.toFile().absoluteFile}] deleted")
+                if (!changedPath.toFile().isDirectory) {
+                    when (it.kind().name()) {
+                        "ENTRY_CREATE" -> println("file [${changedPath.toFile().absoluteFile}] created")
+                        "ENTRY_MODIFY" -> println("file [${changedPath.toFile().absoluteFile}] modified")
+                        "ENTRY_DELETE" -> println("file [${changedPath.toFile().absoluteFile}] deleted")
+                    }
+                    Build(changedPath.toFile().name).run(arrayOf())
                 }
-                changed = true
+//                changed = true
             }
             key.reset()
-            if (changed) {
-                Build().run(arrayOf())
-            }
+//            if (changed) {
+//                Build(changedPath).run(arrayOf())
+//            }
         }
     }
 
@@ -53,10 +57,12 @@ class FileChangeDetector : Runnable {
                     return FileVisitResult.SKIP_SUBTREE
                 }
 
-                dir.register(watchService,
-                        StandardWatchEventKinds.ENTRY_CREATE,
-                        StandardWatchEventKinds.ENTRY_MODIFY,
-                        StandardWatchEventKinds.ENTRY_DELETE)
+                dir.register(
+                    watchService,
+                    StandardWatchEventKinds.ENTRY_CREATE,
+                    StandardWatchEventKinds.ENTRY_MODIFY,
+                    StandardWatchEventKinds.ENTRY_DELETE
+                )
                 return FileVisitResult.CONTINUE
             }
         })
@@ -65,7 +71,8 @@ class FileChangeDetector : Runnable {
     private fun shouldSkip(path: Path) = shouldSkip(path.toAbsolutePath().toString())
 
     private fun shouldSkip(path: String) =
-            path.contains("_site")
-                    || path.contains(".DS_Store", true)
-                    || path.contains(".git")
+        path.contains("_site")
+                || path.contains(".DS_Store", true)
+                || path.contains(".git")
+                || GlobalContext.config.ignore.any { path.endsWith(it) }
 }

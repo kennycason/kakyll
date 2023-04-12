@@ -7,16 +7,23 @@ import java.nio.file.Paths
 /**
  * Clean/Remove contents of _site directory
  */
-class Clean : Cmd {
+class Clean(private val path: String? = null) : Cmd {
 
     override fun run(args: Array<String>) {
-        val sitePath = Paths.get(Structures.Directories.SITE)
-        if (Files.exists(sitePath)) {
-            println("Cleaning site")
-            sitePath.toFile().deleteRecursively()
+        when {
+            path != null -> cleanPath(path)
+            else -> cleanPath(Structures.Directories.SITE)
+        }
+    }
 
-        } else {
-            println("Site already clean, doing nothing.")
+    private fun cleanPath(pathString: String) {
+        val path = Paths.get(pathString)
+        if (Files.exists(path)) {
+            println("Cleaning $path")
+            path.toFile().deleteRecursively()
+        }
+        else {
+            println("$path already clean, doing nothing.")
         }
     }
 

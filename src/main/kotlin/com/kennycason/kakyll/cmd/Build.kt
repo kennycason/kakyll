@@ -9,9 +9,46 @@ import java.nio.file.Paths
 /**
  * Clean contents of _site directory then rebuild the site.
  */
-class Build : Cmd {
+class Build(private val partialBuildPath: String? = null) : Cmd {
 
     override fun run(args: Array<String>) {
+        when {
+            partialBuildPath != null -> partialBuild(partialBuildPath, args)
+            else -> fullBuild(args)
+        }
+    }
+
+    fun partialBuild(path: String, args: Array<String>) {
+        println("Partial Build, building $path")
+
+        GlobalContext.load()
+        val config = GlobalContext.config
+
+        val sitePath = Paths.get(Structures.Directories.SITE)
+
+        // maybe rebuild pages
+        config.pages.forEach { page ->
+            try {
+                if (path == page) {
+                    SinglePageRenderer().render(Paths.get(page), sitePath)
+                }
+            }
+            catch (e: Exception) {
+                println("${Colors.ANSI_RED}Failed to render page: [$page] due to [${e.message}]${Colors.ANSI_RESET}")
+            }
+        }
+
+
+        config.directories.forEach { directory ->
+            if (path == directory.name) {
+                DirectoryCopier().copy(directory)
+            }
+        }
+
+        PostsRenderer(partialBuildPath).render()
+    }
+
+    fun fullBuild(args: Array<String>) {
         println("Building site")
 
         GlobalContext.load()
@@ -28,7 +65,8 @@ class Build : Cmd {
         config.pages.forEach { page ->
             try {
                 SinglePageRenderer().render(Paths.get(page), sitePath)
-            } catch (e: RuntimeException) {
+            }
+            catch (e: RuntimeException) {
                 println("${Colors.ANSI_RED}Failed to render page: [$page] due to [${e.message}]${Colors.ANSI_RESET}")
             }
         }
@@ -42,8 +80,10 @@ class Build : Cmd {
     }
 
 
-    val methods = arrayOf("happens [earlier/later/at the wrong time] every year",
-            "drifts out of sync with the [sun/moon/zodiac/atomic clock in Colorado]",
-            "drifts out of sync with the [Gregorian/Mayan/lunar/iPhone] calendar",
-            "might [not happen/happen twice] this year")
+    val methods = arrayOf(
+        "happens [earlier/later/at the wrong time] every year",
+        "drifts out of sync with the [sun/moon/zodiac/atomic clock in Colorado]",
+        "drifts out of sync with the [Gregorian/Mayan/lunar/iPhone] calendar",
+        "might [not happen/happen twice] this year"
+    )
 }

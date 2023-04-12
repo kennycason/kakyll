@@ -13,7 +13,7 @@ import java.nio.file.Paths
  *
  * take loaded posts and apply templates, then render to html file
  */
-class PostsRenderer {
+class PostsRenderer(private val partialBuildPath: String? = null) {
     private val templateEngineResolver = TemplateEngineResolver()
 
     fun render() {
@@ -29,8 +29,13 @@ class PostsRenderer {
 
         val templateEngine = templateEngineResolver.resolve()
 
+        var isPostChanged = false
         posts.forEach { post ->
+            if (partialBuildPath != null && partialBuildPath != post.parameters["original_file"]) {
+                return@forEach
+            }
             try {
+                isPostChanged = true
                 println("    └ ${post.parameters["original_file"]}")
 
                 // apply template for global parameters
@@ -71,6 +76,10 @@ class PostsRenderer {
             } catch (e: RuntimeException) {
                 println("${Colors.ANSI_RED}Failed to render page: [${post.parameters["original_file"]}] due to [${e.message}]${Colors.ANSI_RESET}")
             }
+        }
+
+        if (isPostChanged) {
+            TagPageRenderer().render()
         }
     }
 
