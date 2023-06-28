@@ -2,6 +2,7 @@ package com.kennycason.kakyll.cmd
 
 import com.kennycason.kakyll.Structures
 import com.kennycason.kakyll.util.FileChangeDetector
+import com.kennycason.kakyll.view.GlobalContext
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.ServerConnector
 import org.eclipse.jetty.server.handler.HandlerList
@@ -16,7 +17,8 @@ class Serve : Cmd {
     override fun run(args: Array<String>) {
         Build().run(args)
 
-        println("Starting server on http://localhost:8080")
+        val config = GlobalContext.config
+        println("Starting server on http://localhost:${config.port}")
 
         System.setProperty("org.eclipse.jetty.LEVEL", "INFO")
 
@@ -25,7 +27,7 @@ class Serve : Cmd {
 
         val server = Server()
         val connector = ServerConnector(server)
-        connector.port = 8080
+        connector.port = config.port
         server.addConnector(connector)
 
         val resourceHandler = ResourceHandler()
