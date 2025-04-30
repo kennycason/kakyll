@@ -53,8 +53,14 @@ class New : Cmd {
 
         // copy assets into assets folder
         copyResourceToFile(
-                "${Structures.Directories.ASSETS}/${Structures.Directories.CSS}/${Structures.Files.CSS}",
+                "${Structures.Directories.ASSETS}/${Structures.Directories.CSS}/${Structures.Files.STYLE_CSS}",
                 Paths.get(assetsPath.toString(), Structures.Directories.CSS))
+        copyResourceToFile(
+            "${Structures.Directories.ASSETS}/${Structures.Directories.IMAGES}/${Structures.Files.KAKYLL_MAIN_IMAGE}",
+            Paths.get(assetsPath.toString(), Structures.Directories.IMAGES))
+        copyResourceToFile(
+            "${Structures.Directories.ASSETS}/${Structures.Directories.IMAGES}/${Structures.Files.KAKYLL_THUMBNAIL}",
+            Paths.get(assetsPath.toString(), Structures.Directories.IMAGES))
 
         // copy root files over
         copyResourceToFile(Structures.Files.CONFIG, directory)

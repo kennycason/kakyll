@@ -25,7 +25,7 @@ class Kakyll {
             println("Must provide command. Valid commands are: ${commands.keys}")
             return
         }
-        val command = args[0].toLowerCase()
+        val command = args[0].lowercase()
         if (!commands.containsKey(command)) {
             println("Unknown command [$command]. Valid commands are: ${commands.keys}")
             return

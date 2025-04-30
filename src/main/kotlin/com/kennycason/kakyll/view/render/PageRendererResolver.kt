@@ -18,7 +18,7 @@ class PageRendererResolver {
     )
 
     fun resolve(path: Path): PageRenderer {
-        val extension = FilenameUtils.getExtension(path.toString()).toLowerCase()
+        val extension = FilenameUtils.getExtension(path.toString()).lowercase()
         renderers[extension]?.let { renderer ->
             return renderer
         }
