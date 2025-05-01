@@ -8,6 +8,21 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    {{#if main_image}}
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:image" content="{{ absolute_url }}{{ main_image }}">
+    <meta property="og:url" content="{{ absolute_url }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ title }}">
+    <meta name="twitter:description" content="{{ description }}">
+    <meta name="twitter:image" content="{{ absolute_url }}{{ main_image }}">
+    {{/if}}
+
     <link rel="icon" type="image/ico" href="/assets/favicon.ico" />
 
     <!-- css -->
@@ -73,7 +88,22 @@
             </div>
             <ul class="list-group">
                 {{#each posts}}
-                    <li class="list-group-item"><a href="{{ this.url }}">{{ this.title }} - {{ this.date }} </a></li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            {{#if this.thumbnail}}
+                            <div class="col-md-3">
+                                <a href="{{ this.url }}"><img src="{{ this.thumbnail }}" alt="{{ this.title }}" class="img-responsive thumbnail"></a>
+                            </div>
+                            <div class="col-md-9">
+                                 <a href="{{ this.url }}">{{ this.title }} - {{ this.date }}</a>
+                            </div>
+                            {{else}}
+                            <div class="col-md-12">
+                                <a href="{{ this.url }}">{{ this.title }} - {{ this.date }}</a>
+                            </div>
+                            {{/if}}
+                        </div>
+                    </li>
                 {{/each}}
             </ul>
         </div>

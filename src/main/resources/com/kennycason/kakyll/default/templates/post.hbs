@@ -14,6 +14,12 @@
         </div>
     </div>
 
+    {{#if main_image}}
+    <div class="post-main-image">
+        <img src="{{ main_image }}" alt="{{ title }}" class="img-responsive">
+    </div>
+    {{/if}}
+
     <hr>
     {{{ content }}}
     <hr>

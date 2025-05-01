@@ -89,7 +89,7 @@ email: you@email.com
 description: My Blog is about random stuff like lorem ipsum and programming. I hope you enjoy.
 base_url: http://localhost:8080 # The base url to your blog. e.g. http://hakyll.com
 template_engine: handlebars
-deploy: rsync -avz ....         # command to execut to deploy contents in _site/*
+deploy: rsync -avz ....         # command to execute to deploy contents in _site/*
 encoding: UTF-8                 # encoding of files, defaults to UTF-8
 date_format: yyyy-dd-MM         # format for date to use in post pages
 posts:                          # configuration for your blog's posts
@@ -123,4 +123,4 @@ The author, Vijaya Anand, put together an immense and detailed post explaining h
 
 The current default template for a post.
 
-<img src="https://github.com/kennycason/kakyll/blob/master/screenshots/post_sample.png?raw=true"/>
+<img src="/screenshots/post_sample.png"/>

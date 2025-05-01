@@ -25,7 +25,9 @@ object Structures {
         const val TAGS = "tags.hbs"
         const val SAMPLE_POST = "welcome-to-kakyll.md"
 
-        const val CSS = "style.css"
+        const val STYLE_CSS = "style.css"
+        const val KAKYLL_MAIN_IMAGE = "post_main_image.png"
+        const val KAKYLL_THUMBNAIL = "post_thumbnail.png"
 
         object Templates {
             const val DEFAULT = "default.hbs"
