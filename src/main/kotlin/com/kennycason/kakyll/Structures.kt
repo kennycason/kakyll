@@ -4,7 +4,7 @@ package com.kennycason.kakyll
  * Created by kenny on 5/17/17.
  */
 object Structures {
-    const val TEMPLATE_RESOURCE_PATH = "/com/kennycason/kakyll/default/"
+    const val TEMPLATE_RESOURCE_PATH = "/default/"
 
     object Directories {
         const val SITE = "_site"
@@ -23,6 +23,7 @@ object Structures {
         const val INDEX = "index.hbs"
         const val ABOUT = "about.hbs"
         const val TAGS = "tags.hbs"
+        const val IMAGES = "images.hbs"
         const val SAMPLE_POST = "welcome-to-kakyll.md"
 
         const val STYLE_CSS = "style.css"

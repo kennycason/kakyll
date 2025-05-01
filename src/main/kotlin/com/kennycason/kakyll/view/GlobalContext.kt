@@ -1,6 +1,7 @@
 package com.kennycason.kakyll.view
 
 import com.kennycason.kakyll.config.ConfigLoader
+import com.kennycason.kakyll.view.posts.ImagesCollectionBuilder
 import com.kennycason.kakyll.view.posts.PostsLoader
 import com.kennycason.kakyll.view.posts.PostsTagCloudBuilder
 
@@ -13,11 +14,13 @@ object GlobalContext {
     var config = ConfigLoader().load()
     var posts = PostsLoader().load()
     var tags = PostsTagCloudBuilder().build(posts)
+    var images = ImagesCollectionBuilder().build(posts)
 
     fun load() {
         config = ConfigLoader().load()
         posts = PostsLoader().load()
         tags = PostsTagCloudBuilder().build(posts)
+        images = ImagesCollectionBuilder().build(posts)
     }
 
 }

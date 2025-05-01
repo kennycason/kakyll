@@ -39,6 +39,8 @@ class Build : Cmd {
         PostsRenderer().render()
 
         TagPageRenderer().render()
+
+        ImagePageRenderer().render()
     }
 
 

@@ -60,6 +60,7 @@ class FlexMarkPageRenderer : PageRenderer {
                     .map(String::trim)
                     .toList()
         }
+        // Images are already a list in YAML, so we don't need to transform them
         return parameter
     }
 

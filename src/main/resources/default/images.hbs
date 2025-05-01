@@ -1,0 +1,55 @@
+<h1>Image Gallery</h1>
+
+<h2>Main Images</h2>
+<div class="row">
+    {{#each all_main_images}}
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><a href="{{this.postUrl}}">{{this.postTitle}}</a></h4>
+            </div>
+            <div class="panel-body">
+                <a href="{{this.postUrl}}">
+                    <img src="{{this.path}}" alt="{{this.postTitle}}" class="img-responsive">
+                </a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<h2>Thumbnails</h2>
+<div class="row">
+    {{#each all_thumbnails}}
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5><a href="{{this.postUrl}}">{{this.postTitle}}</a></h5>
+            </div>
+            <div class="panel-body">
+                <a href="{{this.postUrl}}">
+                    <img src="{{this.path}}" alt="{{this.postTitle}}" class="img-responsive">
+                </a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<h2>Post Images</h2>
+<div class="row">
+    {{#each all_images}}
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5><a href="{{this.postUrl}}">{{this.postTitle}}</a></h5>
+            </div>
+            <div class="panel-body">
+                <a href="{{this.postUrl}}">
+                    <img src="{{this.path}}" alt="{{this.postTitle}}" class="img-responsive">
+                </a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

@@ -61,12 +61,22 @@ class New : Cmd {
         copyResourceToFile(
             "${Structures.Directories.ASSETS}/${Structures.Directories.IMAGES}/${Structures.Files.KAKYLL_THUMBNAIL}",
             Paths.get(assetsPath.toString(), Structures.Directories.IMAGES))
+        copyResourceToFile(
+            "${Structures.Directories.ASSETS}/${Structures.Directories.IMAGES}/post_image_1.png",
+            Paths.get(assetsPath.toString(), Structures.Directories.IMAGES))
+        copyResourceToFile(
+            "${Structures.Directories.ASSETS}/${Structures.Directories.IMAGES}/post_image_2.png",
+            Paths.get(assetsPath.toString(), Structures.Directories.IMAGES))
+        copyResourceToFile(
+            "${Structures.Directories.ASSETS}/${Structures.Directories.IMAGES}/post_image_3.png",
+            Paths.get(assetsPath.toString(), Structures.Directories.IMAGES))
 
         // copy root files over
         copyResourceToFile(Structures.Files.CONFIG, directory)
         copyResourceToFile(Structures.Files.INDEX, directory)
         copyResourceToFile(Structures.Files.ABOUT, directory)
         copyResourceToFile(Structures.Files.TAGS, directory)
+        copyResourceToFile(Structures.Files.IMAGES, directory)
 
         // copy templates files over
         val templateDirectory = Paths.get(directory.toString(), Structures.Directories.TEMPLATES)
