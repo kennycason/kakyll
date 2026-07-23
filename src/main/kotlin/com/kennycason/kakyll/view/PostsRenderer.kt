@@ -16,12 +16,22 @@ import java.nio.file.Paths
 class PostsRenderer {
     private val templateEngineResolver = TemplateEngineResolver()
 
-    fun render() {
+    fun render(postFiles: Set<String>? = null) {
         val config = GlobalContext.config
         val posts = GlobalContext.posts
         val tags = GlobalContext.tags
+        val postsToRender = if (postFiles == null) {
+            posts
+        } else {
+            posts.filter { post -> postFiles.contains(post.parameters["original_file"] as? String) }
+        }
 
-        println("└ Rendering posts to directory [${config.posts.directory}]")
+        if (postsToRender.isEmpty()) {
+            return
+        }
+
+        val renderLabel = if (postFiles == null) "posts" else "changed posts"
+        println("└ Rendering $renderLabel to directory [${config.posts.directory}]")
         val outputDir = File(Structures.Directories.SITE, config.posts.directory)
         outputDir.mkdirs()
 
@@ -29,7 +39,7 @@ class PostsRenderer {
 
         val templateEngine = templateEngineResolver.resolve()
 
-        posts.forEach { post ->
+        postsToRender.forEach { post ->
             try {
                 println("    └ ${post.parameters["original_file"]}")
 

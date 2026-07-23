@@ -35,6 +35,58 @@ class SiteRenderer {
         renderAll(copyDirectories = false)
     }
 
+    fun renderPostChanges(
+        changedPostFiles: Set<String>,
+        renderAllPosts: Boolean,
+        renderPostMetadataPages: Boolean,
+        renderTagCloudPage: Boolean,
+        renderTagPages: Boolean,
+        cleanTagPages: Boolean,
+        renderImagesPage: Boolean
+    ) {
+        val config = GlobalContext.config
+        val sitePath = Paths.get(Structures.Directories.SITE)
+        Files.createDirectories(sitePath)
+
+        if (renderPostMetadataPages) {
+            config.pages
+                    .map(Paths::get)
+                    .filterNot(this::isTagCloudPage)
+                    .filterNot(this::isImagesPage)
+                    .forEach { page -> renderPage(page, sitePath) }
+        }
+
+        val hasTagCloudPage = config.pages.map(Paths::get).any(this::isTagCloudPage)
+        val shouldRenderTagCloudPage = renderPostMetadataPages || renderTagCloudPage
+        if (shouldRenderTagCloudPage && hasTagCloudPage) {
+            renderPage(Paths.get(Structures.Files.TAGS), sitePath)
+        } else if (shouldRenderTagCloudPage) {
+            println("└ Skipping tag cloud page; ${Structures.Files.TAGS} is not configured")
+        } else {
+            println("└ Skipping tag cloud page; tag metadata unchanged")
+        }
+
+        if (renderAllPosts) {
+            PostsRenderer().render()
+        } else {
+            PostsRenderer().render(changedPostFiles)
+        }
+
+        val shouldRenderTagPages = renderPostMetadataPages || renderTagPages
+        if (shouldRenderTagPages) {
+            renderTagPages(cleanFirst = cleanTagPages)
+        } else {
+            println("└ Skipping tag pages; tag metadata unchanged")
+        }
+
+        val shouldRenderImagesPage = renderPostMetadataPages || renderImagesPage
+        if (shouldRenderImagesPage) {
+            ImagePageRenderer().render()
+        } else {
+            println("└ Skipping images page; image metadata unchanged")
+        }
+    }
+
     fun renderConfiguredPage(page: Path) {
         val sitePath = Paths.get(Structures.Directories.SITE)
         Files.createDirectories(sitePath)
@@ -91,4 +143,10 @@ class SiteRenderer {
             println("${Colors.ANSI_RED}Failed to render page: [$page] due to [${e.message}]${Colors.ANSI_RESET}")
         }
     }
+
+    private fun isTagCloudPage(page: Path) =
+            page.fileName.toString() == Structures.Files.TAGS
+
+    private fun isImagesPage(page: Path) =
+            page.fileName.toString() == Structures.Files.IMAGES
 }

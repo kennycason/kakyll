@@ -5,6 +5,9 @@ import com.kennycason.kakyll.config.Directory
 import com.kennycason.kakyll.util.FileChange
 import com.kennycason.kakyll.view.GlobalContext
 import com.kennycason.kakyll.view.SiteRenderer
+import com.kennycason.kakyll.view.posts.Image
+import com.kennycason.kakyll.view.posts.Tag
+import com.kennycason.kakyll.view.render.Page
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.FilenameUtils
 import java.nio.file.Files
@@ -46,19 +49,21 @@ class IncrementalBuild {
                 .filter { isInDirectory(root, it.path, staticDirectories) }
                 .forEach { applyStaticChange(root, it) }
 
-        val dynamicChanges = normalizedChanges.filter { change ->
-            isPostChange(root, change.path)
-                    || isTemplateChange(root, change.path)
+        val templateChanges = normalizedChanges.filter { change ->
+            isTemplateChange(root, change.path)
         }
-        if (dynamicChanges.isNotEmpty()) {
-            dynamicChanges
-                    .filter { it.kind == StandardWatchEventKinds.ENTRY_DELETE && isPostChange(root, it.path) }
-                    .forEach { deleteOutputFile(postOutputPath(root, it.path)) }
-
-            println("└ Posts or templates changed; rerendering generated HTML only")
+        if (templateChanges.isNotEmpty()) {
+            println("└ Templates changed; rerendering generated HTML only")
             GlobalContext.load()
             SiteRenderer().renderDynamicContent()
             return
+        }
+
+        val postChanges = normalizedChanges.filter { change ->
+            isPostChange(root, change.path)
+        }
+        if (postChanges.isNotEmpty()) {
+            applyPostChanges(root, postChanges)
         }
 
         normalizedChanges
@@ -68,6 +73,43 @@ class IncrementalBuild {
         normalizedChanges
                 .filter { isInDirectory(root, it.path, renderedDirectories) }
                 .forEach { applyRenderedDirectoryChange(root, it) }
+    }
+
+    private fun applyPostChanges(root: Path, changes: List<FileChange>) {
+        val previousSnapshot = PostAggregateSnapshot.from(
+                GlobalContext.posts,
+                GlobalContext.tags,
+                GlobalContext.images)
+
+        changes
+                .filter { it.kind == StandardWatchEventKinds.ENTRY_DELETE }
+                .forEach { deleteOutputFile(postOutputPath(root, it.path)) }
+
+        println("└ Posts changed; refreshing post context")
+        GlobalContext.load()
+
+        val currentSnapshot = PostAggregateSnapshot.from(
+                GlobalContext.posts,
+                GlobalContext.tags,
+                GlobalContext.images)
+        val tagCloudChanged = previousSnapshot.tagCloud != currentSnapshot.tagCloud
+        val tagPagesChanged = previousSnapshot.tagPages != currentSnapshot.tagPages
+        val tagNamesChanged = previousSnapshot.tagNames != currentSnapshot.tagNames
+        val imagesChanged = previousSnapshot.images != currentSnapshot.images
+        val postMetadataChanged = previousSnapshot.postMetadata != currentSnapshot.postMetadata
+        val changedPostFiles = changes
+                .filterNot { it.kind == StandardWatchEventKinds.ENTRY_DELETE }
+                .map { it.path.fileName.toString() }
+                .toSet()
+
+        SiteRenderer().renderPostChanges(
+                changedPostFiles = changedPostFiles,
+                renderAllPosts = postMetadataChanged,
+                renderPostMetadataPages = postMetadataChanged,
+                renderTagCloudPage = tagCloudChanged,
+                renderTagPages = tagPagesChanged,
+                cleanTagPages = tagNamesChanged,
+                renderImagesPage = imagesChanged)
     }
 
     private fun applyStaticChange(root: Path, change: FileChange) {
@@ -187,4 +229,102 @@ class IncrementalBuild {
 
     private fun isRenderable(path: Path) =
             renderableExtensions.contains(FilenameUtils.getExtension(path.toString()).lowercase())
+}
+
+private data class PostAggregateSnapshot(
+    val postMetadata: List<Map<String, Any?>>,
+    val tagCloud: List<Map<String, Any?>>,
+    val tagPages: Map<String, List<Map<String, Any?>>>,
+    val tagNames: Set<String>,
+    val images: Map<String, List<Image>>
+) {
+    companion object {
+        private val generatedParameterKeys = setOf(
+                "content",
+                "posts",
+                "tag_cloud",
+                "all_images",
+                "all_main_images",
+                "all_thumbnails")
+        private val imageParameterKeys = setOf(
+                "main_image",
+                "thumbnail",
+                "images")
+
+        fun from(
+            posts: List<Page>,
+            tags: List<Tag>,
+            images: Map<String, List<Image>>
+        ): PostAggregateSnapshot {
+            return PostAggregateSnapshot(
+                    postMetadata = postMetadata(posts),
+                    tagCloud = tagCloud(tags),
+                    tagPages = tagPages(posts, tags),
+                    tagNames = tags.map(Tag::tag).toSet(),
+                    images = images.toSortedMap())
+        }
+
+        private fun postMetadata(posts: List<Page>): List<Map<String, Any?>> {
+            return posts
+                    .map(::metadataParameters)
+                    .sortedBy { it["original_file"]?.toString() ?: "" }
+        }
+
+        private fun tagCloud(tags: List<Tag>): List<Map<String, Any?>> {
+            return tags.map { tag ->
+                mapOf(
+                        "tag" to tag.tag,
+                        "count" to tag.count.toString(),
+                        "url" to tag.url)
+            }
+        }
+
+        private fun tagPages(
+            posts: List<Page>,
+            tags: List<Tag>
+        ): Map<String, List<Map<String, Any?>>> {
+            return tags
+                    .map { tag ->
+                        tag.tag to posts
+                                .filter { post -> postTags(post).contains(tag.tag) }
+                                .map(::tagPageMetadataParameters)
+                    }
+                    .toMap()
+        }
+
+        private fun metadataParameters(post: Page): Map<String, Any?> {
+            return post.parameters
+                    .filterKeys { key -> !generatedParameterKeys.contains(key) }
+                    .toSortedMap()
+                    .mapValues { entry -> canonicalize(entry.value) }
+        }
+
+        private fun tagPageMetadataParameters(post: Page): Map<String, Any?> {
+            return metadataParameters(post)
+                    .filterKeys { key -> !imageParameterKeys.contains(key) }
+        }
+
+        private fun postTags(post: Page): List<String> {
+            val tags = post.parameters["tags"] ?: return emptyList()
+            if (tags is Iterable<*>) {
+                return tags.filterIsInstance<String>()
+            }
+            if (tags is String) {
+                return tags.split(",").map(String::trim)
+            }
+            return emptyList()
+        }
+
+        private fun canonicalize(value: Any?): Any? {
+            return when (value) {
+                null -> null
+                is Map<*, *> -> value.entries
+                        .sortedBy { entry -> entry.key.toString() }
+                        .associate { entry -> entry.key.toString() to canonicalize(entry.value) }
+                is Iterable<*> -> value.map(::canonicalize)
+                is Array<*> -> value.map(::canonicalize)
+                else -> value.toString()
+            }
+        }
+    }
 }
